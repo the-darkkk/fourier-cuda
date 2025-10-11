@@ -42,3 +42,4 @@ public:
 private:
     int selectedDeviceIndex; // selected device id
 };
+
