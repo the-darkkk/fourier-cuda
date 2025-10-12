@@ -134,10 +134,13 @@ namespace fourierui {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(2, 3);
+			this->pictureBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->pictureBox1->Location = System::Drawing::Point(6, -4);
 			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1030, 423);
+			this->pictureBox1->Size = System::Drawing::Size(1030, 442);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -170,14 +173,15 @@ namespace fourierui {
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label11);
 			this->groupBox1->Controls->Add(this->label10);
+			this->groupBox1->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(254)));
 			this->groupBox1->ForeColor = System::Drawing::Color::Black;
-			this->groupBox1->Location = System::Drawing::Point(3, 432);
+			this->groupBox1->Location = System::Drawing::Point(0, 433);
 			this->groupBox1->Margin = System::Windows::Forms::Padding(2);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Padding = System::Windows::Forms::Padding(2);
-			this->groupBox1->Size = System::Drawing::Size(1030, 180);
+			this->groupBox1->Size = System::Drawing::Size(1036, 180);
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Параметри графіку";
@@ -232,6 +236,7 @@ namespace fourierui {
 			// 
 			// numericUpDown4
 			// 
+			this->numericUpDown4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->numericUpDown4->Location = System::Drawing::Point(758, 124);
 			this->numericUpDown4->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown4->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
@@ -243,6 +248,7 @@ namespace fourierui {
 			// 
 			// label1
 			// 
+			this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(566, 124);
 			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
@@ -282,6 +288,7 @@ namespace fourierui {
 			// 
 			// button2
 			// 
+			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button2->ForeColor = System::Drawing::Color::SeaGreen;
 			this->button2->Location = System::Drawing::Point(879, 103);
 			this->button2->Margin = System::Windows::Forms::Padding(2);
@@ -294,6 +301,7 @@ namespace fourierui {
 			// 
 			// button1
 			// 
+			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button1->ForeColor = System::Drawing::Color::SeaGreen;
 			this->button1->Location = System::Drawing::Point(879, 28);
 			this->button1->Margin = System::Windows::Forms::Padding(2);
@@ -306,6 +314,7 @@ namespace fourierui {
 			// 
 			// numericUpDown3
 			// 
+			this->numericUpDown3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->numericUpDown3->Location = System::Drawing::Point(758, 99);
 			this->numericUpDown3->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown3->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
@@ -317,6 +326,7 @@ namespace fourierui {
 			// 
 			// numericUpDown2
 			// 
+			this->numericUpDown2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->numericUpDown2->Location = System::Drawing::Point(758, 74);
 			this->numericUpDown2->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
@@ -328,6 +338,7 @@ namespace fourierui {
 			// 
 			// numericUpDown1
 			// 
+			this->numericUpDown1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->numericUpDown1->Location = System::Drawing::Point(758, 50);
 			this->numericUpDown1->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
@@ -363,6 +374,7 @@ namespace fourierui {
 			// 
 			// label9
 			// 
+			this->label9->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label9->AutoSize = true;
 			this->label9->Location = System::Drawing::Point(584, 99);
 			this->label9->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
@@ -393,6 +405,7 @@ namespace fourierui {
 			// 
 			// label6
 			// 
+			this->label6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label6->AutoSize = true;
 			this->label6->Location = System::Drawing::Point(559, 79);
 			this->label6->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
@@ -404,6 +417,7 @@ namespace fourierui {
 			// 
 			// label5
 			// 
+			this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label5->AutoSize = true;
 			this->label5->Location = System::Drawing::Point(549, 52);
 			this->label5->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
@@ -435,6 +449,7 @@ namespace fourierui {
 			// 
 			// label11
 			// 
+			this->label11->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label11->AutoSize = true;
 			this->label11->ForeColor = System::Drawing::Color::SeaGreen;
 			this->label11->Location = System::Drawing::Point(549, 24);
@@ -475,7 +490,7 @@ namespace fourierui {
 			this->Controls->Add(this->pictureBox1);
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"fourier-cuda";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
