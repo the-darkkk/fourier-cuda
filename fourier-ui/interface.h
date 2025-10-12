@@ -88,9 +88,6 @@ namespace fourierui {
 		System::ComponentModel::Container^ components;
 
 	private:
-		double al, bl, Ne;
-		int Ne, Ngr, Ng;
-
 		FourierCudaCalculator* fourier; // create a pointer to fourier-calculation class
 		void CalculateFourier();
 		void DrawGraphics(const Result& result, const std::vector<double>& x_values, const std::vector<double>& y_values);
@@ -482,110 +479,110 @@ namespace fourierui {
 
 		}
 #pragma endregion
-		double Kx, Ky, Zx, Zy; // коефiцiєнти масштабування
-		double Tp; // область визначення функції та її період : Tp = bl - al
-		double minYg, maxYg, maxx, maxy, minx, miny; // для обчислення коефіцієнтів масштабування
-		double krx, kry, xx, yy, Gx, Gy; // для виведення осей координат і їх підписів
-		int KrokX, KrokY, L;
+		//double Kx, Ky, Zx, Zy; // коефiцiєнти масштабування
+		//double Tp; // область визначення функції та її період : Tp = bl - al
+		//double minYg, maxYg, maxx, maxy, minx, miny; // для обчислення коефіцієнтів масштабування
+		//double krx, kry, xx, yy, Gx, Gy; // для виведення осей координат і їх підписів
+		//int KrokX, KrokY, L;
 
 
-		double f(double x)
-		{
-			switch (func_select->SelectedIndex)
-			{
-			case 0: return sin(x);
-			case 1: return abs(((int)x % 2) - 1);
-			case 2: return sin(x) + cos(2 * x);
-			case 3: return abs(cos(x));
-			default: MessageBox::Show("Виберіть функцію"); return 0;
-			}
-		}
+		//double f(double x)
+		//{
+		//	switch (func_select->SelectedIndex)
+		//	{
+		//	case 0: return sin(x);
+		//	case 1: return abs(((int)x % 2) - 1);
+		//	case 2: return sin(x) + cos(2 * x);
+		//	case 3: return abs(cos(x));
+		//	default: MessageBox::Show("Виберіть функцію"); return 0;
+		//	}
+		//}
 
-		void TabF(double Xe[1000], double Ye[1000])
-		{
-			double h;
-			h = (bl - al) / Ne;
-			Xe[0] = al;
-			for (int i = 0; i <= Ne - 1; i++)
-			{
-				Ye[i] = f(Xe[i]);
-				Xe[i + 1] = Xe[i] + h;
-			}
-		}
+		//void TabF(double Xe[1000], double Ye[1000])
+		//{
+		//	double h;
+		//	h = (bl - al) / Ne;
+		//	Xe[0] = al;
+		//	for (int i = 0; i <= Ne - 1; i++)
+		//	{
+		//		Ye[i] = f(Xe[i]);
+		//		Xe[i + 1] = Xe[i] + h;
+		//	}
+		//}
 
-		void Furje(double Xe[1000], double Ye[1000], int Ne, double Yg[1000], double c[50], double TP)
-		{
-			double a[50]; // масив a із коефіцієнтами ряду Фур’є
-			double b[50]; // масив b із коефіцієнтами ряду Фур’є
-			double w, KOM, S, G, D;
-			if (Ng >= 50) {
-				MessageBox::Show("Забагато гармонік. Функцію не розкладено у ряд Фур'є");
-				return;
-			}
-			al = Convert::ToDouble(textBox1->Text);
-			bl = Convert::ToDouble(textBox2->Text);
-			TP = bl - al;
-			w = 2 * Math::PI / TP;
-			for (int k = 1; k <= Ng; k++) {
-				KOM = k * w;
-				G = 0;
-				D = 0;
-				switch (integral_select->SelectedIndex) {
-				case 0:  // ?? метод
-					for (int i = 1; i <= Ne - 1; i++) {
-						S = KOM * Xe[i];
-						G = G + Ye[i] * cos(S);
-						D = D + Ye[i] * sin(S);
-					}
-					break;
+		//void Furje(double Xe[1000], double Ye[1000], int Ne, double Yg[1000], double c[50], double TP)
+		//{
+		//	double a[50]; // масив a із коефіцієнтами ряду Фур’є
+		//	double b[50]; // масив b із коефіцієнтами ряду Фур’є
+		//	double w, KOM, S, G, D;
+		//	if (Ng >= 50) {
+		//		MessageBox::Show("Забагато гармонік. Функцію не розкладено у ряд Фур'є");
+		//		return;
+		//	}
+		//	al = Convert::ToDouble(textBox1->Text);
+		//	bl = Convert::ToDouble(textBox2->Text);
+		//	TP = bl - al;
+		//	w = 2 * Math::PI / TP;
+		//	for (int k = 1; k <= Ng; k++) {
+		//		KOM = k * w;
+		//		G = 0;
+		//		D = 0;
+		//		switch (integral_select->SelectedIndex) {
+		//		case 0:  // ?? метод
+		//			for (int i = 1; i <= Ne - 1; i++) {
+		//				S = KOM * Xe[i];
+		//				G = G + Ye[i] * cos(S);
+		//				D = D + Ye[i] * sin(S);
+		//			}
+		//			break;
 
-				case 1:  // Метод прямокутників (центральний)
-					for (int i = 1; i <= Ne - 1; i++) {
-						S = KOM * Xe[i];
-						G = G + Ye[i] * cos(S);
-						D = D + Ye[i] * sin(S);
-					}
-					break;
+		//		case 1:  // Метод прямокутників (центральний)
+		//			for (int i = 1; i <= Ne - 1; i++) {
+		//				S = KOM * Xe[i];
+		//				G = G + Ye[i] * cos(S);
+		//				D = D + Ye[i] * sin(S);
+		//			}
+		//			break;
 
-				case 2:  // Метод трапецій
-					for (int i = 1; i <= Ne - 1; i++) {
-						S = KOM * Xe[i];
-						G = G + 0.5 * (Ye[i] + Ye[i - 1]) * cos(S);
-						D = D + 0.5 * (Ye[i] + Ye[i - 1]) * sin(S);
-					}
-					break;
+		//		case 2:  // Метод трапецій
+		//			for (int i = 1; i <= Ne - 1; i++) {
+		//				S = KOM * Xe[i];
+		//				G = G + 0.5 * (Ye[i] + Ye[i - 1]) * cos(S);
+		//				D = D + 0.5 * (Ye[i] + Ye[i - 1]) * sin(S);
+		//			}
+		//			break;
 
-				case 3:  // Метод парабол (Сімпсона)
-					for (int i = 1; i <= Ne - 2; i += 2) {
-						S = KOM * Xe[i];
-						G = G + (Ye[i - 1] + 4 * Ye[i] + Ye[i + 1]) * cos(S) / 3.0;
-						D = D + (Ye[i - 1] + 4 * Ye[i] + Ye[i + 1]) * sin(S) / 3.0;
-					}
-					break;
-				default: MessageBox::Show("Виберіть метод обчислення інтегралу"); return;
-				}
-				a[k] = 2 * G / Ne;
-				b[k] = 2 * D / Ne;
-				c[k] = Math::Sqrt(a[k] * a[k] + b[k] * b[k]);
-			}
-			a[0] = 0;
-			for (int i = 0; i <= Ne - 1; i++) {
-				a[0] = a[0] + Ye[i];
-			}
-			a[0] = a[0] / Ne;
-			for (int i = 0; i <= Ne - 1; i++) {
-				S = 0;
-				D = Xe[i] * w;
-				for (int k = 1; k <= Ng; k++) {
-					KOM = k * D;
-					S = S + b[k] * sin(KOM) + a[k] * cos(KOM);
-				}
-				Yg[i] = a[0] + S;
-			}
-			return; // Завершення тіла функції Furje
-		}
+		//		case 3:  // Метод парабол (Сімпсона)
+		//			for (int i = 1; i <= Ne - 2; i += 2) {
+		//				S = KOM * Xe[i];
+		//				G = G + (Ye[i - 1] + 4 * Ye[i] + Ye[i + 1]) * cos(S) / 3.0;
+		//				D = D + (Ye[i - 1] + 4 * Ye[i] + Ye[i + 1]) * sin(S) / 3.0;
+		//			}
+		//			break;
+		//		default: MessageBox::Show("Виберіть метод обчислення інтегралу"); return;
+		//		}
+		//		a[k] = 2 * G / Ne;
+		//		b[k] = 2 * D / Ne;
+		//		c[k] = Math::Sqrt(a[k] * a[k] + b[k] * b[k]);
+		//	}
+		//	a[0] = 0;
+		//	for (int i = 0; i <= Ne - 1; i++) {
+		//		a[0] = a[0] + Ye[i];
+		//	}
+		//	a[0] = a[0] / Ne;
+		//	for (int i = 0; i <= Ne - 1; i++) {
+		//		S = 0;
+		//		D = Xe[i] * w;
+		//		for (int k = 1; k <= Ng; k++) {
+		//			KOM = k * D;
+		//			S = S + b[k] * sin(KOM) + a[k] * cos(KOM);
+		//		}
+		//		Yg[i] = a[0] + S;
+		//	}
+		//	return; // Завершення тіла функції Furje
+		//}
 
-		void Garm(int Ng, double c[50])
+		/*void Garm(int Ng, double c[50])
 		{
 			int i, KrokXG, x;
 			double MaxC, KyC, w;
@@ -628,93 +625,22 @@ namespace fourierui {
 			g->DrawString(s, gcnew Drawing::Font("Times", 12), Brushes::Black, (float)x - 20.0f,
 				(float)pb_Height - 35.0f);
 			return;
-		}
+		}*/
 
 
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		Close();
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		TabF(Xe, Ye);
-		Furje(Xe, Ye, Ne, Yg, c, Tp);
-		minx = Xe[0]; maxx = Xe[Ne - 1];
-		miny = Ye[0]; maxy = Ye[0];
-		minYg = Yg[0]; maxYg = Yg[0];
-		for (int i = 1; i <= Ne - 1; i++)
-		{
-			if (minYg > Yg[i]) minYg = Yg[i];
-		}
-		for (int i = 1; i <= Ne - 1; i++)
-		{
-			if (maxy < Ye[i]) maxy = Ye[i];
-			if (miny > Ye[i]) miny = Ye[i];
-		}
-		if (miny > minYg) { miny = minYg; }
-		if (maxy < maxYg) { maxy = maxYg; }
-		Kx = (pb_Width - 2 * L) / (maxx - minx);
-		Ky = (pb_Height - 2 * L) / (miny - maxy);
-		Zx = (pb_Width * minx - L * (maxx + minx)) / (minx - maxx);
-		Zy = (pb_Height * maxy - L * (miny + maxy)) / (maxy - miny);
-		if (minx * maxx <= 0.0) Gx = 0.0;
-		if (minx * maxx > 0.0) Gx = minx;
-		if (minx * maxx > 0.0 && minx < 0.0) Gx = maxx;
-		if (miny * maxy <= 0.0) Gy = 0.0;
-		if (miny * maxy > 0.0 && miny > 0.0) Gy = miny;
-		if (miny * maxy > 0.0 && miny < 0.0) Gy = maxy;
-		KrokX = (pb_Width - 2 * L) / 10;
-		KrokY = (pb_Height - 2 * L) / 9;
-		for (int i = 1; i < 7; i++)
-		{
-			g->DrawLine(pen3, L, Math::Round(Ky * Gy + Zy, 4) + i * KrokY, pb_Width - L,
-				Math::Round(Ky * Gy + Zy, 4) + i * KrokY);
-			g->DrawLine(pen3, L, Math::Round(Ky * Gy + Zy, 4) - i * KrokY, pb_Width - L,
-				Math::Round(Ky * Gy + Zy, 4) - i * KrokY);
-		}
-		for (int i = 1; i < 9; i++)
-		{
-			g->DrawLine(pen3, Math::Round(Kx * Gx + Zx, 4) + i * KrokX, L - 20,
-				Math::Round(Kx * Gx + Zx, 4) + i * KrokX, pb_Height - L + 30);
-			g->DrawLine(pen3, Math::Round(Kx * Gx + Zx, 4) - i * KrokX, L - 20,
-				Math::Round(Kx * Gx + Zx, 4) - i * KrokX, pb_Height - L + 30);
-		}xx = minx; yy = maxy;
-		krx = (maxx - minx) / 10.0;
-		kry = (maxy - miny) / 10.6;
-		for (int i = 0; i < 12; i++)
-		{
-			g->DrawString(Convert::ToString(Math::Round(xx, 1)), gcnew Drawing::Font("Times", 8),
-				Brushes::Black, L + 4 + i * KrokX, Math::Round(Ky * Gy + Zy, 4) - L + 40.0f);
-			g->DrawString(Convert::ToString(Math::Round(yy, 1)), gcnew Drawing::Font("Times", 8),
-				Brushes::Black, Math::Round(Kx * Gx + Zx, 4) - L + 10.0f, (float)(L + i * KrokY) - 24.0f);
-			xx = xx + krx;
-			yy = yy - kry;
-		}
-		g->DrawLine(pen2, L, Math::Round(Ky * Gy + Zy, 4), Math::Round(pb_Width - 10, 4),
-			Math::Round(Ky * Gy + Zy, 4)); // вісь У
-		g->DrawLine(pen2, Math::Round(Kx * Gx + Zx, 4), 10, Math::Round(Kx * Gx + Zx, 4),
-			Math::Round(pb_Height - 10, 4)); // вісь x
-		for (int i = 1; i <= Ne - 1; i++)
-		{
-			g->DrawLine(pen1, Math::Round(Kx * Xe[i - 1] + Zx, 4), Math::Round(Ky * Ye[i - 1] + Zy, 4),
-				Math::Round(Kx * Xe[i] + Zx, 4), Convert::ToInt32(Math::Round(Ky * Ye[i] + Zy, 4)));
-		}
-		minYg = Yg[0]; maxYg = Yg[0];
-		for (int i = 1; i <= Ne - 1; i++)
-		{
-			if (minYg > Yg[i]) minYg = Yg[i];
-		}
-		for (int i = 1; i <= Ne - 1; i++)
-		{
-			g->DrawLine(pen4, Math::Round(Kx * Xe[i - 1] + Zx, 4), Math::Round(Ky * Yg[i - 1] + Zy, 4),
-				Math::Round(Kx * Xe[i] + Zx, 4), Convert::ToInt32(Math::Round(Ky * Yg[i] + Zy, 4)));
-		}
-		if (Ng < 50) {
+		
+	/*	if (Ng < 50) {
 			DialogResult = MessageBox::Show("Показати гармоніки?", "Гармоніки", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 			if (DialogResult == System::Windows::Forms::DialogResult::Yes)
 			{
 				g->Clear(Color::White);
 				Garm(Ng, c);
 			}
-		}
+		}*/
 	}
 	private: System::Void label11_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
