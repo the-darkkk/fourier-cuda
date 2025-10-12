@@ -26,7 +26,7 @@ __global__ void calculateCoefficientsKernel(double* d_G, double* d_D, const doub
 
 // step 2 - reconstructing the function from given garmonics
 __global__ void calculateSeriesKernel(double* d_Yg, const double* d_x, const double* d_a, const double* d_b, int Ne, int Ng, double w) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x; // Глобальний ID потоку
+    int i = blockIdx.x * blockDim.x + threadIdx.x; 
     if (i >= Ne) return;
 
     const double a0 = d_a[0];
