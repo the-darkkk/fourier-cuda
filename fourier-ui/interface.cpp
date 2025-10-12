@@ -25,7 +25,10 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		x_values[i] = al + i * h;
 		switch (func_select->SelectedIndex) {
 		case 0: y_values[i] = sin(x_values[i]); break;
-	    // ..
+		case 1: y_values[i] = abs(((int)x_values[i] % 2) - 1); break;
+		case 2: y_values[i] = sin(x_values[i]) + cos(2 * x_values[i]); break;
+		case 3: y_values[i] = abs(cos(x_values[i])); break;
+		default: MessageBox::Show("Виберіть функцію"); break;
 		}
 	}
 
@@ -34,6 +37,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 	input.numHarmonics = Ng;
 
 	Result output = fourier->Calculate(input, x_values, y_values);
+	label15->Text = Convert::ToString(output.executionTimeMs) + " ms";
 	DrawGraphics(output, x_values, y_values);
 }
 

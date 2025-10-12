@@ -81,6 +81,7 @@ namespace fourierui {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container^ components;
+	private: System::Windows::Forms::Label^ label15;
 
 	private:
 		FourierCudaCalculator* fourier; // create a pointer to fourier-calculation class
@@ -122,6 +123,7 @@ namespace fourierui {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label11 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->label15 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
@@ -141,6 +143,7 @@ namespace fourierui {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label15);
 			this->groupBox1->Controls->Add(this->label13);
 			this->groupBox1->Controls->Add(this->gpu_select);
 			this->groupBox1->Controls->Add(this->label4);
@@ -178,12 +181,13 @@ namespace fourierui {
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Параметри графіку";
+			this->groupBox1->Enter += gcnew System::EventHandler(this, &MyForm::groupBox1_Enter);
 			// 
 			// label13
 			// 
 			this->label13->AutoSize = true;
 			this->label13->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label13->Location = System::Drawing::Point(316, 41);
+			this->label13->Location = System::Drawing::Point(316, 28);
 			this->label13->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(211, 15);
@@ -191,12 +195,12 @@ namespace fourierui {
 			this->label13->Text = L"Виберіть GPU для обчислення\r\n";
 			this->label13->Click += gcnew System::EventHandler(this, &MyForm::label13_Click);
 			// 
-			// integral_select
+			// gpu_select
 			// 
 			this->gpu_select->FormattingEnabled = true;
-			this->gpu_select->Location = System::Drawing::Point(319, 60);
+			this->gpu_select->Location = System::Drawing::Point(319, 48);
 			this->gpu_select->Margin = System::Windows::Forms::Padding(2);
-			this->gpu_select->Name = L"integral_select";
+			this->gpu_select->Name = L"gpu_select";
 			this->gpu_select->Size = System::Drawing::Size(201, 23);
 			this->gpu_select->TabIndex = 5;
 			this->gpu_select->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::integral_select_SelectedIndexChanged);
@@ -206,7 +210,7 @@ namespace fourierui {
 			// 
 			this->label4->AutoSize = true;
 			this->label4->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label4->Location = System::Drawing::Point(316, 116);
+			this->label4->Location = System::Drawing::Point(316, 82);
 			this->label4->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(204, 15);
@@ -220,7 +224,7 @@ namespace fourierui {
 				L"sin(x)", L"f(x) = |(x mod 2) - 1|", L"f(x) = sin(x) + cos(2x)",
 					L"f(x) = |cos(x)|"
 			});
-			this->func_select->Location = System::Drawing::Point(319, 136);
+			this->func_select->Location = System::Drawing::Point(319, 103);
 			this->func_select->Margin = System::Windows::Forms::Padding(2);
 			this->func_select->Name = L"func_select";
 			this->func_select->Size = System::Drawing::Size(201, 23);
@@ -452,6 +456,16 @@ namespace fourierui {
 			this->label10->TabIndex = 0;
 			this->label10->Text = L"Введіть межі зміни аргументу";
 			// 
+			// label15
+			// 
+			this->label15->AutoSize = true;
+			this->label15->ForeColor = System::Drawing::Color::MediumSeaGreen;
+			this->label15->Location = System::Drawing::Point(328, 136);
+			this->label15->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->label15->Name = L"label15";
+			this->label15->Size = System::Drawing::Size(0, 15);
+			this->label15->TabIndex = 26;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -502,6 +516,8 @@ private: System::Void integral_select_Click(System::Object^ sender, System::Even
 		System::String^ mGpus = gcnew System::String(item.c_str());
 		gpu_select->Items->Add(mGpus);
 	}
+}
+private: System::Void groupBox1_Enter(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
