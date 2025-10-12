@@ -13,11 +13,6 @@ namespace fourierui {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	double Xe[1000]; // масив із координатами аргументів графіків
-	double Ye[1000]; // масив із координатами точок періодичної функції
-	double Yg[1000]; // масив із координатами суми ряду Фур’є
-	double c[50]; // масив із значеннями амплітуд гармонік
-
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
@@ -479,160 +474,11 @@ namespace fourierui {
 
 		}
 #pragma endregion
-		//double Kx, Ky, Zx, Zy; // коефiцiєнти масштабування
-		//double Tp; // область визначення функції та її період : Tp = bl - al
-		//double minYg, maxYg, maxx, maxy, minx, miny; // для обчислення коефіцієнтів масштабування
-		//double krx, kry, xx, yy, Gx, Gy; // для виведення осей координат і їх підписів
-		//int KrokX, KrokY, L;
-
-
-		//double f(double x)
-		//{
-		//	switch (func_select->SelectedIndex)
-		//	{
-		//	case 0: return sin(x);
-		//	case 1: return abs(((int)x % 2) - 1);
-		//	case 2: return sin(x) + cos(2 * x);
-		//	case 3: return abs(cos(x));
-		//	default: MessageBox::Show("Виберіть функцію"); return 0;
-		//	}
-		//}
-
-		//void TabF(double Xe[1000], double Ye[1000])
-		//{
-		//	double h;
-		//	h = (bl - al) / Ne;
-		//	Xe[0] = al;
-		//	for (int i = 0; i <= Ne - 1; i++)
-		//	{
-		//		Ye[i] = f(Xe[i]);
-		//		Xe[i + 1] = Xe[i] + h;
-		//	}
-		//}
-
-		//void Furje(double Xe[1000], double Ye[1000], int Ne, double Yg[1000], double c[50], double TP)
-		//{
-		//	double a[50]; // масив a із коефіцієнтами ряду Фур’є
-		//	double b[50]; // масив b із коефіцієнтами ряду Фур’є
-		//	double w, KOM, S, G, D;
-		//	if (Ng >= 50) {
-		//		MessageBox::Show("Забагато гармонік. Функцію не розкладено у ряд Фур'є");
-		//		return;
-		//	}
-		//	al = Convert::ToDouble(textBox1->Text);
-		//	bl = Convert::ToDouble(textBox2->Text);
-		//	TP = bl - al;
-		//	w = 2 * Math::PI / TP;
-		//	for (int k = 1; k <= Ng; k++) {
-		//		KOM = k * w;
-		//		G = 0;
-		//		D = 0;
-		//		switch (integral_select->SelectedIndex) {
-		//		case 0:  // ?? метод
-		//			for (int i = 1; i <= Ne - 1; i++) {
-		//				S = KOM * Xe[i];
-		//				G = G + Ye[i] * cos(S);
-		//				D = D + Ye[i] * sin(S);
-		//			}
-		//			break;
-
-		//		case 1:  // Метод прямокутників (центральний)
-		//			for (int i = 1; i <= Ne - 1; i++) {
-		//				S = KOM * Xe[i];
-		//				G = G + Ye[i] * cos(S);
-		//				D = D + Ye[i] * sin(S);
-		//			}
-		//			break;
-
-		//		case 2:  // Метод трапецій
-		//			for (int i = 1; i <= Ne - 1; i++) {
-		//				S = KOM * Xe[i];
-		//				G = G + 0.5 * (Ye[i] + Ye[i - 1]) * cos(S);
-		//				D = D + 0.5 * (Ye[i] + Ye[i - 1]) * sin(S);
-		//			}
-		//			break;
-
-		//		case 3:  // Метод парабол (Сімпсона)
-		//			for (int i = 1; i <= Ne - 2; i += 2) {
-		//				S = KOM * Xe[i];
-		//				G = G + (Ye[i - 1] + 4 * Ye[i] + Ye[i + 1]) * cos(S) / 3.0;
-		//				D = D + (Ye[i - 1] + 4 * Ye[i] + Ye[i + 1]) * sin(S) / 3.0;
-		//			}
-		//			break;
-		//		default: MessageBox::Show("Виберіть метод обчислення інтегралу"); return;
-		//		}
-		//		a[k] = 2 * G / Ne;
-		//		b[k] = 2 * D / Ne;
-		//		c[k] = Math::Sqrt(a[k] * a[k] + b[k] * b[k]);
-		//	}
-		//	a[0] = 0;
-		//	for (int i = 0; i <= Ne - 1; i++) {
-		//		a[0] = a[0] + Ye[i];
-		//	}
-		//	a[0] = a[0] / Ne;
-		//	for (int i = 0; i <= Ne - 1; i++) {
-		//		S = 0;
-		//		D = Xe[i] * w;
-		//		for (int k = 1; k <= Ng; k++) {
-		//			KOM = k * D;
-		//			S = S + b[k] * sin(KOM) + a[k] * cos(KOM);
-		//		}
-		//		Yg[i] = a[0] + S;
-		//	}
-		//	return; // Завершення тіла функції Furje
-		//}
-
-		/*void Garm(int Ng, double c[50])
-		{
-			int i, KrokXG, x;
-			double MaxC, KyC, w;
-			Graphics^ g = pictureBox1->CreateGraphics();
-			Pen^ pen1 = gcnew Pen(Color::Black, (float)(numericUpDown1->Value));
-			Pen^ pen2 = gcnew Pen(Color::Blue, (float)(numericUpDown2->Value));
-			Pen^ pen3 = gcnew Pen(Color::Silver, (float)(numericUpDown3->Value));
-			Pen^ pen4 = gcnew Pen(Color::Green, (float)(numericUpDown4->Value));
-			int pb_Height = pictureBox1->Height;
-			int pb_Width = pictureBox1->Width;
-			KrokXG = (pb_Width - 2 * L) / Ng;
-			MaxC = c[1];
-			for (i = 2; i <= Ng; i++)
-				if (c[i] > MaxC) MaxC = c[i];
-			KyC = (pb_Height / 2) / MaxC;
-			g->DrawLine(pen2, L, L + 20, L + 10, L + 10);
-			g->DrawLine(pen2, L + 20, L + 20, L + 10, L + 10);
-			g->DrawLine(pen2, L + 10, pb_Height - 50, pb_Width - 20, pb_Height - 50);
-			g->DrawLine(pen2, L + 10, pb_Height - 50, L + 10, L + 10);
-			g->DrawLine(pen2, pb_Width - 40, pb_Height - 60, pb_Width - 20, pb_Height - 50);
-			g->DrawString("C", gcnew Drawing::Font("Times", 14), Brushes::Black,
-				(float)L - 15, (float)L + 5);
-			g->DrawString("W", gcnew Drawing::Font("Times", 14), Brushes::Black, (float)pb_Width - 60.0f,
-				(float)pb_Height - 50.0f);
-			x = KrokXG + 20;
-			w = 6.2831853 / (bl - al);
-			for (i = 1; i <= Ng; i++)
-			{
-				g->DrawLine(pen1, (int)x + 3, pb_Height - 50, x + 3, pb_Height - 50 - (int)(KyC * c[i]));
-				String^ s = String::Format("{0:F3}", KyC * c[i]);
-				g->DrawString(s, gcnew Drawing::Font("Times", 12), Brushes::Black, (float)x,
-					(float)pb_Height - (float)(KyC * c[i]) - 70.0f);
-				g->DrawEllipse(pen2, (int)x, pb_Height - (int)(KyC * c[i]) - 55, 5, 5);
-				g->DrawString(Convert::ToString(i), gcnew Drawing::Font("Times", 12), Brushes::Black,
-					(float)x - 5.0f, (float)pb_Height - 50.0f);
-				x = x + KrokXG;
-			}
-			x = KrokXG + 19;
-			String^ s = String::Format("W={0:F3}", w);
-			g->DrawString(s, gcnew Drawing::Font("Times", 12), Brushes::Black, (float)x - 20.0f,
-				(float)pb_Height - 35.0f);
-			return;
-		}*/
-
-
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		Close();
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		
+		CalculateFourier();
 	/*	if (Ng < 50) {
 			DialogResult = MessageBox::Show("Показати гармоніки?", "Гармоніки", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 			if (DialogResult == System::Windows::Forms::DialogResult::Yes)
