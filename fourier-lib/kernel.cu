@@ -40,11 +40,10 @@ __global__ void calculateSeriesKernel(double* d_Yg, const double* d_x, const dou
     d_Yg[i] = a0 + S;
 };
 
+// normalizing coefficients between step 1 and step 2
 __global__ void normalizeCoefficientsKernel(double* d_a, double* d_b, const double* d_G, const double* d_D, int Ne, int Ng) {
-    int k = blockIdx.x * blockDim.x + threadIdx.x + 1; // k починається з 1
+    int k = blockIdx.x * blockDim.x + threadIdx.x + 1; 
     if (k > Ng) return;
-
-    // Виконуємо фінальну операцію нормалізації
     d_a[k] = d_G[k] * 2.0 / Ne;
     d_b[k] = d_D[k] * 2.0 / Ne;
 }

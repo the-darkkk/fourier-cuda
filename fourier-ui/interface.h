@@ -72,7 +72,7 @@ namespace fourierui {
 
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label13;
-	private: System::Windows::Forms::ComboBox^ integral_select;
+	private: System::Windows::Forms::ComboBox^ gpu_select;
 
 	protected:
 
@@ -97,7 +97,7 @@ namespace fourierui {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->label13 = (gcnew System::Windows::Forms::Label());
-			this->integral_select = (gcnew System::Windows::Forms::ComboBox());
+			this->gpu_select = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->func_select = (gcnew System::Windows::Forms::ComboBox());
 			this->numericUpDown4 = (gcnew System::Windows::Forms::NumericUpDown());
@@ -133,7 +133,7 @@ namespace fourierui {
 			// pictureBox1
 			// 
 			this->pictureBox1->Location = System::Drawing::Point(2, 3);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(1030, 423);
 			this->pictureBox1->TabIndex = 0;
@@ -142,7 +142,7 @@ namespace fourierui {
 			// groupBox1
 			// 
 			this->groupBox1->Controls->Add(this->label13);
-			this->groupBox1->Controls->Add(this->integral_select);
+			this->groupBox1->Controls->Add(this->gpu_select);
 			this->groupBox1->Controls->Add(this->label4);
 			this->groupBox1->Controls->Add(this->func_select);
 			this->groupBox1->Controls->Add(this->numericUpDown4);
@@ -171,9 +171,9 @@ namespace fourierui {
 				static_cast<System::Byte>(254)));
 			this->groupBox1->ForeColor = System::Drawing::Color::Black;
 			this->groupBox1->Location = System::Drawing::Point(3, 432);
-			this->groupBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->groupBox1->Margin = System::Windows::Forms::Padding(2);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Padding = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->groupBox1->Padding = System::Windows::Forms::Padding(2);
 			this->groupBox1->Size = System::Drawing::Size(1030, 180);
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
@@ -186,22 +186,21 @@ namespace fourierui {
 			this->label13->Location = System::Drawing::Point(316, 41);
 			this->label13->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(264, 15);
+			this->label13->Size = System::Drawing::Size(211, 15);
 			this->label13->TabIndex = 25;
-			this->label13->Text = L"Виберіть метод обчислення інтегралу";
+			this->label13->Text = L"Виберіть GPU для обчислення\r\n";
+			this->label13->Click += gcnew System::EventHandler(this, &MyForm::label13_Click);
 			// 
 			// integral_select
 			// 
-			this->integral_select->FormattingEnabled = true;
-			this->integral_select->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"Звичайний", L"Центр. Прям.", L"Трапецій",
-					L"Сімпсона"
-			});
-			this->integral_select->Location = System::Drawing::Point(319, 60);
-			this->integral_select->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
-			this->integral_select->Name = L"integral_select";
-			this->integral_select->Size = System::Drawing::Size(150, 23);
-			this->integral_select->TabIndex = 5;
+			this->gpu_select->FormattingEnabled = true;
+			this->gpu_select->Location = System::Drawing::Point(319, 60);
+			this->gpu_select->Margin = System::Windows::Forms::Padding(2);
+			this->gpu_select->Name = L"integral_select";
+			this->gpu_select->Size = System::Drawing::Size(201, 23);
+			this->gpu_select->TabIndex = 5;
+			this->gpu_select->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::integral_select_SelectedIndexChanged);
+			this->gpu_select->Click += gcnew System::EventHandler(this, &MyForm::integral_select_Click);
 			// 
 			// label4
 			// 
@@ -222,15 +221,15 @@ namespace fourierui {
 					L"f(x) = |cos(x)|"
 			});
 			this->func_select->Location = System::Drawing::Point(319, 136);
-			this->func_select->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->func_select->Margin = System::Windows::Forms::Padding(2);
 			this->func_select->Name = L"func_select";
-			this->func_select->Size = System::Drawing::Size(150, 23);
+			this->func_select->Size = System::Drawing::Size(201, 23);
 			this->func_select->TabIndex = 6;
 			// 
 			// numericUpDown4
 			// 
 			this->numericUpDown4->Location = System::Drawing::Point(758, 124);
-			this->numericUpDown4->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->numericUpDown4->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown4->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->numericUpDown4->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown4->Name = L"numericUpDown4";
@@ -251,7 +250,7 @@ namespace fourierui {
 			// textBox4
 			// 
 			this->textBox4->Location = System::Drawing::Point(75, 133);
-			this->textBox4->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox4->Margin = System::Windows::Forms::Padding(2);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(76, 21);
 			this->textBox4->TabIndex = 4;
@@ -281,7 +280,7 @@ namespace fourierui {
 			// 
 			this->button2->ForeColor = System::Drawing::Color::SeaGreen;
 			this->button2->Location = System::Drawing::Point(879, 103);
-			this->button2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(135, 58);
 			this->button2->TabIndex = 8;
@@ -293,18 +292,18 @@ namespace fourierui {
 			// 
 			this->button1->ForeColor = System::Drawing::Color::SeaGreen;
 			this->button1->Location = System::Drawing::Point(879, 28);
-			this->button1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button1->Margin = System::Windows::Forms::Padding(2);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(135, 69);
 			this->button1->TabIndex = 7;
-			this->button1->Text = L"Побудувати";
+			this->button1->Text = L"Обчислити\r\nта побудувати\r\n\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
 			// numericUpDown3
 			// 
 			this->numericUpDown3->Location = System::Drawing::Point(758, 99);
-			this->numericUpDown3->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->numericUpDown3->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown3->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->numericUpDown3->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown3->Name = L"numericUpDown3";
@@ -315,7 +314,7 @@ namespace fourierui {
 			// numericUpDown2
 			// 
 			this->numericUpDown2->Location = System::Drawing::Point(758, 74);
-			this->numericUpDown2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->numericUpDown2->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->numericUpDown2->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown2->Name = L"numericUpDown2";
@@ -326,7 +325,7 @@ namespace fourierui {
 			// numericUpDown1
 			// 
 			this->numericUpDown1->Location = System::Drawing::Point(758, 50);
-			this->numericUpDown1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->numericUpDown1->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->numericUpDown1->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
@@ -337,7 +336,7 @@ namespace fourierui {
 			// textBox3
 			// 
 			this->textBox3->Location = System::Drawing::Point(75, 89);
-			this->textBox3->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox3->Margin = System::Windows::Forms::Padding(2);
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(76, 21);
 			this->textBox3->TabIndex = 3;
@@ -345,7 +344,7 @@ namespace fourierui {
 			// textBox2
 			// 
 			this->textBox2->Location = System::Drawing::Point(212, 41);
-			this->textBox2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox2->Margin = System::Windows::Forms::Padding(2);
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(76, 21);
 			this->textBox2->TabIndex = 2;
@@ -353,7 +352,7 @@ namespace fourierui {
 			// textBox1
 			// 
 			this->textBox1->Location = System::Drawing::Point(75, 41);
-			this->textBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox1->Margin = System::Windows::Forms::Padding(2);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(76, 21);
 			this->textBox1->TabIndex = 1;
@@ -460,7 +459,7 @@ namespace fourierui {
 			this->ClientSize = System::Drawing::Size(1036, 613);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->pictureBox1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -492,5 +491,17 @@ namespace fourierui {
 	}
 	private: System::Void label6_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+	private: System::Void label13_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+private: System::Void integral_select_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void integral_select_Click(System::Object^ sender, System::EventArgs^ e) {
+	std::vector<std::string> gpus = fourier->GetAvailableDevices();
+	gpu_select->Items->Clear();
+	for (const auto& item : gpus) {
+		System::String^ mGpus = gcnew System::String(item.c_str());
+		gpu_select->Items->Add(mGpus);
+	}
+}
+};
 }

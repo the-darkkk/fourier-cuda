@@ -91,7 +91,7 @@ Result FourierCudaCalculator::Calculate(const Params& params, const std::vector<
         calculateCoefficientsKernel << <Ng, threadsPerBlock >> > (d_G, d_D, d_x, d_y, Ne, Ng, w);   // launching a parallel fourier coefficients calculation
 
         const int blocksForNorm = (Ng + threadsPerBlock - 1) / threadsPerBlock;
-        normalizeCoefficientsKernel << <blocksForNorm, threadsPerBlock >> > (d_a, d_b, d_G, d_D, Ne, Ng);
+        normalizeCoefficientsKernel << <blocksForNorm, threadsPerBlock >> > (d_a, d_b, d_G, d_D, Ne, Ng); // launching a parallel calculation to normalize coeffs
 
         cudaMemcpy(&d_a[0], &a0, sizeof(double), cudaMemcpyHostToDevice);   // copy the results back to cpu
         

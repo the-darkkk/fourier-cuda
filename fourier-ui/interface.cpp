@@ -29,7 +29,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		}
 	}
 
-	fourier->SelectDevice(0);
+	fourier->SelectDevice(gpu_select->SelectedIndex);  
 	Params input;
 	input.numHarmonics = Ng;
 
