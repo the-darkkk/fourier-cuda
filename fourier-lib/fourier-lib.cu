@@ -5,6 +5,7 @@
 
 __global__ void calculateCoefficientsKernel(double*, double*, const double*, const double*, int, int, double);
 __global__ void calculateSeriesKernel(double*, const double*, const double*, const double*, int, int, double);
+__global__ void normalizeCoefficientsKernel(double*, double*, const double*, const double*, int, int);
 
 FourierCudaCalculator::FourierCudaCalculator() {
 	selectedDeviceIndex = -1; // initializing the selected device index
@@ -88,6 +89,10 @@ Result FourierCudaCalculator::Calculate(const Params& params, const std::vector<
         const int threadsPerBlock = 256; // defining the constant
 
         calculateCoefficientsKernel << <Ng, threadsPerBlock >> > (d_G, d_D, d_x, d_y, Ne, Ng, w);   // launching a parallel fourier coefficients calculation
+
+        const int blocksForNorm = (Ng + threadsPerBlock - 1) / threadsPerBlock;
+        normalizeCoefficientsKernel << <blocksForNorm, threadsPerBlock >> > (d_a, d_b, d_G, d_D, Ne, Ng);
+
         cudaMemcpy(&d_a[0], &a0, sizeof(double), cudaMemcpyHostToDevice);   // copy the results back to cpu
         
         const int blocksPerGrid = (Ne + threadsPerBlock - 1) / threadsPerBlock;     // modifying the blocks count
