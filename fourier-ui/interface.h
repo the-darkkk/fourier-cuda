@@ -1,4 +1,4 @@
-#pragma once 
+Ôªø#pragma once 
 
 #include <cmath>
 #include "../fourier-lib/fourier-lib.h"
@@ -184,7 +184,7 @@ namespace fourierui {
 			this->groupBox1->Size = System::Drawing::Size(1036, 180);
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"œ‡‡ÏÂÚË „‡Ù≥ÍÛ";
+			this->groupBox1->Text = L"–ü–∞—Ä–∞–º–µ—Ç—Ä–∏ –≥—Ä–∞—Ñ—ñ–∫—É";
 			this->groupBox1->Enter += gcnew System::EventHandler(this, &MyForm::groupBox1_Enter);
 			// 
 			// label13
@@ -196,7 +196,7 @@ namespace fourierui {
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(211, 15);
 			this->label13->TabIndex = 25;
-			this->label13->Text = L"¬Ë·Â≥Ú¸ GPU ‰Îˇ Ó·˜ËÒÎÂÌÌˇ\r\n";
+			this->label13->Text = L"–í–∏–±–µ—Ä—ñ—Ç—å GPU –¥–ª—è –æ–±—á–∏—Å–ª–µ–Ω–Ω—è\r\n";
 			this->label13->Click += gcnew System::EventHandler(this, &MyForm::label13_Click);
 			// 
 			// gpu_select
@@ -219,7 +219,7 @@ namespace fourierui {
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(204, 15);
 			this->label4->TabIndex = 23;
-			this->label4->Text = L"¬Ë·Â≥Ú¸ ÔÂ≥Ó‰Ë˜ÌÛ ÙÛÌÍˆ≥˛";
+			this->label4->Text = L"–í–∏–±–µ—Ä—ñ—Ç—å –ø–µ—Ä—ñ–æ–¥–∏—á–Ω—É —Ñ—É–Ω–∫—Ü—ñ—é";
 			// 
 			// func_select
 			// 
@@ -255,7 +255,7 @@ namespace fourierui {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(178, 15);
 			this->label1->TabIndex = 21;
-			this->label1->Text = L"“Ó‚˘ËÌ‡ Î≥Ì≥ø ÒÛÏË ˇ‰Û =";
+			this->label1->Text = L"–¢–æ–≤—â–∏–Ω–∞ –ª—ñ–Ω—ñ—ó —Å—É–º–∏ —Ä—è–¥—É =";
 			// 
 			// textBox4
 			// 
@@ -274,7 +274,7 @@ namespace fourierui {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(188, 15);
 			this->label2->TabIndex = 18;
-			this->label2->Text = L"¬‚Â‰≥Ú¸ Í≥Î¸Í≥ÒÚ¸ „‡ÏÓÌ≥Í";
+			this->label2->Text = L"–í–≤–µ–¥—ñ—Ç—å –∫—ñ–ª—å–∫—ñ—Å—Ç—å –≥–∞—Ä–º–æ–Ω—ñ–∫";
 			// 
 			// label14
 			// 
@@ -295,7 +295,7 @@ namespace fourierui {
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(135, 58);
 			this->button2->TabIndex = 8;
-			this->button2->Text = L"¬ËÈÚË";
+			this->button2->Text = L"–í–∏–π—Ç–∏";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
@@ -308,7 +308,7 @@ namespace fourierui {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(135, 69);
 			this->button1->TabIndex = 7;
-			this->button1->Text = L"Œ·˜ËÒÎËÚË\r\nÚ‡ ÔÓ·Û‰Û‚‡ÚË\r\n\r\n";
+			this->button1->Text = L"–û–±—á–∏—Å–ª–∏—Ç–∏\r\n—Ç–∞ –ø–æ–±—É–¥—É–≤–∞—Ç–∏\r\n\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -381,7 +381,7 @@ namespace fourierui {
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(162, 15);
 			this->label9->TabIndex = 8;
-			this->label9->Text = L"“Ó‚˘ËÌ‡ Î≥Ì≥È „‡ÚÍË =";
+			this->label9->Text = L"–¢–æ–≤—â–∏–Ω–∞ –ª—ñ–Ω—ñ–π –≥—Ä–∞—Ç–∫–∏ =";
 			// 
 			// label8
 			// 
@@ -412,7 +412,7 @@ namespace fourierui {
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(187, 15);
 			this->label6->TabIndex = 5;
-			this->label6->Text = L"“Ó‚˘ËÌ‡ ÓÒÂÈ ÍÓÓ‰ËÌ‡Ú =";
+			this->label6->Text = L"–¢–æ–≤—â–∏–Ω–∞ –æ—Å–µ–π –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç =";
 			this->label6->Click += gcnew System::EventHandler(this, &MyForm::label6_Click);
 			// 
 			// label5
@@ -424,7 +424,7 @@ namespace fourierui {
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(201, 15);
 			this->label5->TabIndex = 4;
-			this->label5->Text = L"“Ó‚˘ËÌ‡ Î≥Ì≥ø „‡Ù≥ÍÛ Ù-ˆ≥ø =";
+			this->label5->Text = L"–¢–æ–≤—â–∏–Ω–∞ –ª—ñ–Ω—ñ—ó –≥—Ä–∞—Ñ—ñ–∫—É —Ñ-—Ü—ñ—ó =";
 			// 
 			// label12
 			// 
@@ -435,7 +435,7 @@ namespace fourierui {
 			this->label12->Name = L"label12";
 			this->label12->Size = System::Drawing::Size(222, 15);
 			this->label12->TabIndex = 3;
-			this->label12->Text = L"¬‚Â‰≥Ú¸ Í≥Î¸Í≥ÒÚ¸ ÚÓ˜ÓÍ „‡Ù≥ÍÛ";
+			this->label12->Text = L"–í–≤–µ–¥—ñ—Ç—å –∫—ñ–ª—å–∫—ñ—Å—Ç—å —Ç–æ—á–æ–∫ –≥—Ä–∞—Ñ—ñ–∫—É";
 			// 
 			// label3
 			// 
@@ -457,7 +457,7 @@ namespace fourierui {
 			this->label11->Name = L"label11";
 			this->label11->Size = System::Drawing::Size(249, 15);
 			this->label11->TabIndex = 1;
-			this->label11->Text = L"Œ·Â≥Ú¸, ÔË ÔÓÚÂ·≥, ≥Ì¯≥ ÁÌ‡˜ÂÌÌˇ";
+			this->label11->Text = L"–û–±–µ—Ä—ñ—Ç—å, –ø—Ä–∏ –ø–æ—Ç—Ä–µ–±—ñ, —ñ–Ω—à—ñ –∑–Ω–∞—á–µ–Ω–Ω—è";
 			this->label11->Click += gcnew System::EventHandler(this, &MyForm::label11_Click);
 			// 
 			// label10
@@ -469,7 +469,7 @@ namespace fourierui {
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(209, 15);
 			this->label10->TabIndex = 0;
-			this->label10->Text = L"¬‚Â‰≥Ú¸ ÏÂÊ≥ ÁÏ≥ÌË ‡„ÛÏÂÌÚÛ";
+			this->label10->Text = L"–í–≤–µ–¥—ñ—Ç—å –º–µ–∂—ñ –∑–º—ñ–Ω–∏ –∞—Ä–≥—É–º–µ–Ω—Ç—É";
 			// 
 			// label15
 			// 
@@ -508,7 +508,7 @@ namespace fourierui {
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		CalculateFourier();
 	/*	if (Ng < 50) {
-			DialogResult = MessageBox::Show("œÓÍ‡Á‡ÚË „‡ÏÓÌ≥ÍË?", "√‡ÏÓÌ≥ÍË", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+			DialogResult = MessageBox::Show("–ü–æ–∫–∞–∑–∞—Ç–∏ –≥–∞—Ä–º–æ–Ω—ñ–∫–∏?", "–ì–∞—Ä–º–æ–Ω—ñ–∫–∏", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 			if (DialogResult == System::Windows::Forms::DialogResult::Yes)
 			{
 				g->Clear(Color::White);
