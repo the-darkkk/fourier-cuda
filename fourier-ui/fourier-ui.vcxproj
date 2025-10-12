@@ -115,6 +115,21 @@
       <Project>{a0f31ab6-7ae9-cb60-310c-0243a2220e5e}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="interface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="interface.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
