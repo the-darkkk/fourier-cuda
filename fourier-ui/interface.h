@@ -507,14 +507,6 @@ namespace fourierui {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		CalculateFourier();
-	/*	if (Ng < 50) {
-			DialogResult = MessageBox::Show("Показати гармоніки?", "Гармоніки", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
-			if (DialogResult == System::Windows::Forms::DialogResult::Yes)
-			{
-				g->Clear(Color::White);
-				Garm(Ng, c);
-			}
-		}*/
 	}
 	private: System::Void label11_Click(System::Object^ sender, System::EventArgs^ e) {
 	}

@@ -40,7 +40,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 	Result output = fourier->Calculate(input, x_values, y_values); 
 	label15->Text = Convert::ToString(output.executionTimeMs) + " ms"; // show a timer
 	if (output.isSuccess) { DrawGraphics(output, x_values, y_values); } // draw charts if successfull
-	else { MessageBox::Show("Error occured! : " + gcnew String(output.errorMessage.c_str())); }; // show an error if unsuccessful
+	else { MessageBox::Show("Error occured! : " + gcnew String(output.errorMessage.c_str()), "Error");}; // show an error if unsuccessful
 }
 
 void MyForm::DrawGraphics(const Result& result, const std::vector<double>& x_values, const std::vector<double>& y_values) { // draw graphics from calculated data
