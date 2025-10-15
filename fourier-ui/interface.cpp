@@ -1,4 +1,4 @@
-#include "interface.h"
+п»ї#include "interface.h"
 #include <Windows.h>
 #include <tchar.h>
 
@@ -29,7 +29,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		case 1: y_values[i] = abs(((int)x_values[i] % 2) - 1); break;
 		case 2: y_values[i] = sin(x_values[i]) + cos(2 * x_values[i]); break;
 		case 3: y_values[i] = abs(cos(x_values[i])); break;
-		default: MessageBox::Show("Виберіть функцію"); break;
+		default: MessageBox::Show("Р’РёР±РµСЂС–С‚СЊ С„СѓРЅРєС†С–СЋ"); break;
 		}
 	}
 
