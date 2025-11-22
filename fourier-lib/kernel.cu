@@ -1,4 +1,27 @@
-﻿#include "cuda_runtime.h"
+﻿#define USE_SAFE_ATOMICS 0 // directive that switches to looped implementation of atomicAdd for doubles.
+// recommended to use for nvidia maxwell architecture and any compatibility layers for launching on non-nvidia hardware
+
+#if defined(USE_SAFE_ATOMICS) // basically uses uns long long int insted of doubles
+__device__ double safeAtomicAdd(double* address, double val)
+{
+    unsigned long long int* address_as_ull = (unsigned long long int*)address;
+    unsigned long long int old = *address_as_ull, assumed;
+    do {
+        assumed = old;
+        old = atomicCAS(address_as_ull, assumed,
+            __double_as_longlong(val + __longlong_as_double(assumed)));
+    } while (assumed != old);
+    return __longlong_as_double(old);
+}
+
+#else
+__device__ double safeAtomicAdd(double* address, double val)
+{
+    return atomicAdd(address, val);
+}
+#endif
+
+#include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 #include <cmath>
 
@@ -20,8 +43,8 @@ __global__ void calculateCoefficientsKernel(double* d_G, double* d_D, const doub
     }
 
     // adding the calculated data together from all threads
-    atomicAdd(&d_G[k], G_private);
-    atomicAdd(&d_D[k], D_private);
+    safeAtomicAdd(&d_G[k], G_private);
+    safeAtomicAdd(&d_D[k], D_private);
 }
 
 // step 2 - reconstructing the function from given garmonics
