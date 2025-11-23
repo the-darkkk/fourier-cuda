@@ -14,7 +14,7 @@ void LogGpuError(const std::string& context) { // logging function (shouldn't bo
     cudaError_t syncErr = cudaDeviceSynchronize();
 
     if (err != cudaSuccess || syncErr != cudaSuccess) {
-        std::ofstream outfile("gpu_error_log.txt", std::ios_base::app); // Append mode
+        std::ofstream outfile("cuda_log.txt", std::ios_base::app); // Append mode
         if (err != cudaSuccess) {
             outfile << "LAUNCH ERROR [" << context << "]: " << cudaGetErrorString(err) << "\n";
         }
@@ -62,6 +62,7 @@ bool FourierCudaCalculator::SelectDevice(int deviceId) {
 };
 
 Result FourierCudaCalculator::Calculate(const Params& params, const std::vector<double>& x_values, const std::vector<double>& y_values) {
+    std::ofstream("cuda_log.txt", std::ios::trunc);
     Result result;
     const double PI = 3.14159265358979323846;   // a kludge bcs M_PI somewhy does not work here
     if (selectedDeviceIndex < 0) {
