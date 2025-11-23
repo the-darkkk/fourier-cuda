@@ -18,8 +18,10 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 	try {
 		al = Convert::ToDouble(textBox1->Text);
 		bl = Convert::ToDouble(textBox2->Text);
-		Ne = Convert::ToUInt32(textBox3->Text);
 		Ng = Convert::ToUInt32(textBox4->Text);
+		if (cb_auto->Checked) { Ne = 3 * Ng; textBox3->Text = Convert::ToString(Ne); } // automatic way - usually 3 points is enough to have a good-looking garmonics
+		else { Ne = Convert::ToUInt32(textBox3->Text); };
+		if (Ng == 0 || Ne == 0) { throw -1; };
 	}
 	catch (...) {
 		MessageBox::Show("Bad input parameters!", "Error"); return;

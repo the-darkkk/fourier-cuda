@@ -1,4 +1,4 @@
-﻿#define USE_SAFE_ATOMICS 1 // directive that switches to looped implementation of atomicAdd for doubles.
+﻿#define USE_SAFE_ATOMICS 0 // directive that switches to looped implementation of atomicAdd for doubles.
 // recommended to use for nvidia maxwell architecture and any compatibility layers for launching on non-nvidia hardware
 
 #if defined(USE_SAFE_ATOMICS) // basically uses uns long long int insted of doubles
