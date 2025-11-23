@@ -2,21 +2,28 @@
 #include <Windows.h>
 #include <tchar.h>
 
-using namespace fourierui; 
+using namespace fourierui;
 [STAThread]
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	Application::EnableVisualStyles(); 
+	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::Run(gcnew MyForm);
 	return 0;
 }
 
 void MyForm::CalculateFourier() { // function to perform fourier calculations by accessing the functions in fourier-lib
-	double al = Convert::ToDouble(textBox1->Text);
-	double bl = Convert::ToDouble(textBox2->Text);
-	double Ne = Convert::ToInt32(textBox3->Text);
-	double Ng = Convert::ToInt32(textBox4->Text);
+	double al, bl;
+	unsigned int Ne, Ng;
+	try {
+		al = Convert::ToDouble(textBox1->Text);
+		bl = Convert::ToDouble(textBox2->Text);
+		Ne = Convert::ToUInt32(textBox3->Text);
+		Ng = Convert::ToUInt32(textBox4->Text);
+	}
+	catch (...) {
+		MessageBox::Show("Bad input parameters!", "Error"); return;
+	};
 
 	std::vector<double> x_values(Ne);
 	std::vector<double> y_values(Ne);
@@ -29,7 +36,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		case 1: y_values[i] = abs(((int)x_values[i] % 2) - 1); break;
 		case 2: y_values[i] = sin(x_values[i]) + cos(2 * x_values[i]); break;
 		case 3: y_values[i] = abs(cos(x_values[i])); break;
-		default: MessageBox::Show("Виберіть функцію"); break;
+		default: MessageBox::Show("No function selected!", "Error"); return;
 		}
 	}
 
