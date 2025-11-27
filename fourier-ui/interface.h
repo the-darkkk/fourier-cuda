@@ -3,6 +3,8 @@
 #include <cmath>
 #include "../fourier-lib/fourier-lib.h"
 #pragma comment(lib, "fourier-lib.lib")
+#include "../fourier-cpu-lib/fourier-cpu-lib.h"
+#pragma comment(lib, "fourier-cpu-lib.lib")
 
 namespace fourierui {
 
@@ -23,7 +25,6 @@ namespace fourierui {
 		MyForm(void)
 		{
 			InitializeComponent();
-			fourier = new FourierCudaCalculator();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -55,7 +56,6 @@ namespace fourierui {
 			{
 				delete components;
 			}
-			delete fourier;
 		}
 
 	private: System::Windows::Forms::GroupBox^ groupBox1;
@@ -106,9 +106,8 @@ namespace fourierui {
 
 
 	private:
-		FourierCudaCalculator* fourier; // create a pointer to fourier-calculation class
 		void CalculateFourier();
-		void DrawGraphics(const Result& result, const std::vector<double>& x_values, const std::vector<double>& y_values);
+		void DrawGraphics(const std::vector<double>& calculatedY, const std::vector<double>& x_values, const std::vector<double>& y_values);
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -535,7 +534,8 @@ namespace fourierui {
 private: System::Void integral_select_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void integral_select_Click(System::Object^ sender, System::EventArgs^ e) {
-	std::vector<std::string> gpus = fourier->GetAvailableDevices();
+	FourierGPU::FourierCudaCalculator tempCalc;
+	std::vector<std::string> gpus = tempCalc.GetAvailableDevices();
 	gpu_select->Items->Clear();
 	for (const auto& item : gpus) {
 		System::String^ mGpus = gcnew System::String(item.c_str());

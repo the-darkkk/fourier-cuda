@@ -5,6 +5,8 @@
 #include <fstream>  // for logging
 #include <string> // for logging
 
+using namespace FourierGPU;
+
 __global__ void calculateCoefficientsKernel(double*, double*, const double*, const double*, int, int, double);
 __global__ void calculateSeriesKernel(double*, const double*, const double*, const double*, int, int, double);
 __global__ void normalizeCoefficientsKernel(double*, double*, const double*, const double*, int, int);

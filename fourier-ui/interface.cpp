@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	return 0;
 }
 
-void MyForm::CalculateFourier() { // function to perform fourier calculations by accessing the functions in fourier-lib
+void MyForm::CalculateFourier() { // function to perform fourier calculations by accessing the functions in fourier-lib or fourier-cpu-lib
 	double al, bl;
 	unsigned int Ne, Ng;
 	try {
@@ -42,17 +42,44 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		}
 	}
 
-	fourier->SelectDevice(gpu_select->SelectedIndex);  
-	Params input;
-	input.numHarmonics = Ng;
+	std::vector<double> calculatedY;
+	float executionTimeMs = 0.0f;
+	bool isSuccess = false;
+	std::string errorMessage = "";
 
-	Result output = fourier->Calculate(input, x_values, y_values); 
-	label15->Text = Convert::ToString(output.executionTimeMs) + " ms"; // show a timer
-	if (output.isSuccess) { DrawGraphics(output, x_values, y_values); } // draw charts if successfull
-	else { MessageBox::Show("Error occured! : " + gcnew String(output.errorMessage.c_str()), "Error");}; // show an error if unsuccessful
+	if (cb_cpu->Checked) {
+		FourierCPU::FourierCpuCalculator calc;
+		FourierCPU::Params p;
+		p.numHarmonics = Ng;
+		// skip the device select
+		auto res = calc.Calculate(p, x_values, y_values); // CPU Calculation
+
+		// save the data to variables
+		calculatedY = res.calculatedY;
+		executionTimeMs = res.executionTimeMs;
+		isSuccess = res.isSuccess;
+		errorMessage = res.errorMessage;
+	}
+	else {
+		FourierGPU::FourierCudaCalculator calc;
+		FourierGPU::Params p;
+		p.numHarmonics = Ng;
+		calc.SelectDevice(gpu_select->SelectedIndex);
+		auto res = calc.Calculate(p, x_values, y_values); // GPU Calculation
+
+		// save the data to variables
+		calculatedY = res.calculatedY;
+		executionTimeMs = res.executionTimeMs;
+		isSuccess = res.isSuccess;
+		errorMessage = res.errorMessage;
+	}
+
+	label15->Text = Convert::ToString(executionTimeMs) + " ms"; // show a timer
+	if (isSuccess) { DrawGraphics(calculatedY, x_values, y_values); } // draw charts if successfull
+	else { MessageBox::Show("Error occured! : " + gcnew String(errorMessage.c_str()), "Error");}; // show an error if unsuccessful
 }
 
-void MyForm::DrawGraphics(const Result& result, const std::vector<double>& x_values, const std::vector<double>& y_values) {
+void MyForm::DrawGraphics(const std::vector<double>& calculatedY, const std::vector<double>& x_values, const std::vector<double>& y_values) {
 	this->chart1->Series->SuspendUpdates();
 	this->chart1->Series->Clear();
 
@@ -71,8 +98,8 @@ void MyForm::DrawGraphics(const Result& result, const std::vector<double>& x_val
 	for (size_t i = 0; i < count; i++) {
 		sOriginal->Points->AddXY(x_values[i], y_values[i]);
 
-		if (i < result.calculatedY.size()) { 
-			sFourier->Points->AddXY(x_values[i], result.calculatedY[i]);
+		if (i < calculatedY.size()) { 
+			sFourier->Points->AddXY(x_values[i], calculatedY[i]);
 		}
 	}
 
