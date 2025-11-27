@@ -37,10 +37,12 @@ namespace fourierui {
 			area->AxisX->ScaleView->Zoomable = true;
 			area->AxisY->ScaleView->Zoomable = true;
 			area->AxisX->ScrollBar->IsPositionedInside = true;
-			area->AxisX->ScaleView->MinSize = 0.0;
-			area->AxisY->ScaleView->MinSize = 0.0;
-			area->AxisX->ScaleView->SmallScrollMinSize = 0.0;
-			area->AxisY->ScaleView->SmallScrollMinSize = 0.0;
+			area->AxisX->ScaleView->MinSize = 1e-6;
+			area->AxisY->ScaleView->MinSize = 1e-6;
+			area->AxisX->ScaleView->SmallScrollMinSize = 1e-6;
+			area->AxisY->ScaleView->SmallScrollMinSize = 1e-6;
+			area->CursorX->Interval = 0.0;
+			area->CursorY->Interval = 0.0;
 		}
 
 	protected:
@@ -58,10 +60,10 @@ namespace fourierui {
 
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 
-	private: System::Windows::Forms::Label^ label9;
+
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::Label^ label6;
+
 	private: System::Windows::Forms::Label^ label5;
 
 	private: System::Windows::Forms::Label^ label3;
@@ -72,8 +74,8 @@ namespace fourierui {
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown3;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown2;
+
+
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button1;
@@ -100,6 +102,7 @@ namespace fourierui {
 	private: System::Windows::Forms::CheckBox^ cb_auto;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
 	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::CheckBox^ cb_cpu;
 
 
 	private:
@@ -114,10 +117,11 @@ namespace fourierui {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea4 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea3 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->cb_cpu = (gcnew System::Windows::Forms::CheckBox());
 			this->cb_auto = (gcnew System::Windows::Forms::CheckBox());
 			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->label13 = (gcnew System::Windows::Forms::Label());
@@ -131,16 +135,12 @@ namespace fourierui {
 			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->numericUpDown3 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
@@ -150,14 +150,13 @@ namespace fourierui {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->cb_cpu);
 			this->groupBox1->Controls->Add(this->cb_auto);
 			this->groupBox1->Controls->Add(this->label15);
 			this->groupBox1->Controls->Add(this->label13);
@@ -171,16 +170,12 @@ namespace fourierui {
 			this->groupBox1->Controls->Add(this->label14);
 			this->groupBox1->Controls->Add(this->button2);
 			this->groupBox1->Controls->Add(this->button1);
-			this->groupBox1->Controls->Add(this->numericUpDown3);
-			this->groupBox1->Controls->Add(this->numericUpDown2);
 			this->groupBox1->Controls->Add(this->numericUpDown1);
 			this->groupBox1->Controls->Add(this->textBox3);
 			this->groupBox1->Controls->Add(this->textBox2);
 			this->groupBox1->Controls->Add(this->textBox1);
-			this->groupBox1->Controls->Add(this->label9);
 			this->groupBox1->Controls->Add(this->label8);
 			this->groupBox1->Controls->Add(this->label7);
-			this->groupBox1->Controls->Add(this->label6);
 			this->groupBox1->Controls->Add(this->label5);
 			this->groupBox1->Controls->Add(this->label12);
 			this->groupBox1->Controls->Add(this->label3);
@@ -190,21 +185,33 @@ namespace fourierui {
 			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(254)));
 			this->groupBox1->ForeColor = System::Drawing::Color::Black;
-			this->groupBox1->Location = System::Drawing::Point(0, 666);
+			this->groupBox1->Location = System::Drawing::Point(0, 433);
+			this->groupBox1->Margin = System::Windows::Forms::Padding(2);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(1554, 277);
+			this->groupBox1->Padding = System::Windows::Forms::Padding(2);
+			this->groupBox1->Size = System::Drawing::Size(1036, 180);
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Параметри графіку";
 			this->groupBox1->Enter += gcnew System::EventHandler(this, &MyForm::groupBox1_Enter);
 			// 
+			// cb_cpu
+			// 
+			this->cb_cpu->AutoSize = true;
+			this->cb_cpu->Location = System::Drawing::Point(319, 76);
+			this->cb_cpu->Name = L"cb_cpu";
+			this->cb_cpu->Size = System::Drawing::Size(168, 19);
+			this->cb_cpu->TabIndex = 27;
+			this->cb_cpu->Text = L"Обчислювати на CPU";
+			this->cb_cpu->UseVisualStyleBackColor = true;
+			this->cb_cpu->CheckedChanged += gcnew System::EventHandler(this, &MyForm::cb_cpu_CheckedChanged);
+			// 
 			// cb_auto
 			// 
 			this->cb_auto->AutoSize = true;
-			this->cb_auto->Location = System::Drawing::Point(234, 137);
-			this->cb_auto->Margin = System::Windows::Forms::Padding(4, 5, 4, 5);
+			this->cb_auto->Location = System::Drawing::Point(156, 89);
 			this->cb_auto->Name = L"cb_auto";
-			this->cb_auto->Size = System::Drawing::Size(158, 26);
+			this->cb_auto->Size = System::Drawing::Size(115, 19);
 			this->cb_auto->TabIndex = 4;
 			this->cb_auto->Text = L"Автоматично";
 			this->cb_auto->UseVisualStyleBackColor = true;
@@ -214,18 +221,20 @@ namespace fourierui {
 			// 
 			this->label15->AutoSize = true;
 			this->label15->ForeColor = System::Drawing::Color::MediumSeaGreen;
-			this->label15->Location = System::Drawing::Point(492, 209);
+			this->label15->Location = System::Drawing::Point(549, 130);
+			this->label15->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label15->Name = L"label15";
-			this->label15->Size = System::Drawing::Size(0, 22);
+			this->label15->Size = System::Drawing::Size(0, 15);
 			this->label15->TabIndex = 26;
 			// 
 			// label13
 			// 
 			this->label13->AutoSize = true;
 			this->label13->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label13->Location = System::Drawing::Point(474, 43);
+			this->label13->Location = System::Drawing::Point(316, 28);
+			this->label13->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(294, 22);
+			this->label13->Size = System::Drawing::Size(211, 15);
 			this->label13->TabIndex = 25;
 			this->label13->Text = L"Виберіть GPU для обчислення\r\n";
 			this->label13->Click += gcnew System::EventHandler(this, &MyForm::label13_Click);
@@ -233,9 +242,10 @@ namespace fourierui {
 			// gpu_select
 			// 
 			this->gpu_select->FormattingEnabled = true;
-			this->gpu_select->Location = System::Drawing::Point(478, 74);
+			this->gpu_select->Location = System::Drawing::Point(319, 48);
+			this->gpu_select->Margin = System::Windows::Forms::Padding(2);
 			this->gpu_select->Name = L"gpu_select";
-			this->gpu_select->Size = System::Drawing::Size(300, 30);
+			this->gpu_select->Size = System::Drawing::Size(201, 23);
 			this->gpu_select->TabIndex = 6;
 			this->gpu_select->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::integral_select_SelectedIndexChanged);
 			this->gpu_select->Click += gcnew System::EventHandler(this, &MyForm::integral_select_Click);
@@ -244,9 +254,10 @@ namespace fourierui {
 			// 
 			this->label4->AutoSize = true;
 			this->label4->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label4->Location = System::Drawing::Point(474, 126);
+			this->label4->Location = System::Drawing::Point(316, 103);
+			this->label4->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(284, 22);
+			this->label4->Size = System::Drawing::Size(204, 15);
 			this->label4->TabIndex = 23;
 			this->label4->Text = L"Виберіть періодичну функцію";
 			// 
@@ -257,19 +268,21 @@ namespace fourierui {
 				L"sin(x)", L"f(x) = |(x mod 2) - 1|", L"f(x) = sin(x) + cos(2x)",
 					L"f(x) = |cos(x)|"
 			});
-			this->func_select->Location = System::Drawing::Point(478, 158);
+			this->func_select->Location = System::Drawing::Point(319, 122);
+			this->func_select->Margin = System::Windows::Forms::Padding(2);
 			this->func_select->Name = L"func_select";
-			this->func_select->Size = System::Drawing::Size(300, 30);
+			this->func_select->Size = System::Drawing::Size(201, 23);
 			this->func_select->TabIndex = 7;
 			// 
 			// numericUpDown4
 			// 
 			this->numericUpDown4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->numericUpDown4->Location = System::Drawing::Point(1137, 191);
+			this->numericUpDown4->Location = System::Drawing::Point(762, 80);
+			this->numericUpDown4->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown4->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->numericUpDown4->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown4->Name = L"numericUpDown4";
-			this->numericUpDown4->Size = System::Drawing::Size(56, 28);
+			this->numericUpDown4->Size = System::Drawing::Size(37, 21);
 			this->numericUpDown4->TabIndex = 12;
 			this->numericUpDown4->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			// 
@@ -277,35 +290,39 @@ namespace fourierui {
 			// 
 			this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(849, 191);
+			this->label1->Location = System::Drawing::Point(553, 82);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(256, 22);
+			this->label1->Size = System::Drawing::Size(205, 15);
 			this->label1->TabIndex = 21;
-			this->label1->Text = L"Товщина лінії суми ряду =";
+			this->label1->Text = L"Товщина лінії графіку Фур\'є =\r\n";
 			// 
 			// textBox4
 			// 
-			this->textBox4->Location = System::Drawing::Point(112, 205);
+			this->textBox4->Location = System::Drawing::Point(75, 133);
+			this->textBox4->Margin = System::Windows::Forms::Padding(2);
 			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(112, 28);
+			this->textBox4->Size = System::Drawing::Size(76, 21);
 			this->textBox4->TabIndex = 5;
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label2->Location = System::Drawing::Point(39, 178);
+			this->label2->Location = System::Drawing::Point(26, 116);
+			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(254, 22);
+			this->label2->Size = System::Drawing::Size(188, 15);
 			this->label2->TabIndex = 18;
 			this->label2->Text = L"Введіть кількість гармонік";
 			// 
 			// label14
 			// 
 			this->label14->AutoSize = true;
-			this->label14->Location = System::Drawing::Point(39, 209);
+			this->label14->Location = System::Drawing::Point(26, 136);
+			this->label14->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(59, 22);
+			this->label14->Size = System::Drawing::Size(41, 15);
 			this->label14->TabIndex = 17;
 			this->label14->Text = L"Ng = ";
 			// 
@@ -313,9 +330,10 @@ namespace fourierui {
 			// 
 			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button2->ForeColor = System::Drawing::Color::SeaGreen;
-			this->button2->Location = System::Drawing::Point(1318, 158);
+			this->button2->Location = System::Drawing::Point(879, 103);
+			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(202, 89);
+			this->button2->Size = System::Drawing::Size(135, 58);
 			this->button2->TabIndex = 13;
 			this->button2->Text = L"Вийти";
 			this->button2->UseVisualStyleBackColor = true;
@@ -325,114 +343,79 @@ namespace fourierui {
 			// 
 			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button1->ForeColor = System::Drawing::Color::SeaGreen;
-			this->button1->Location = System::Drawing::Point(1318, 43);
+			this->button1->Location = System::Drawing::Point(879, 28);
+			this->button1->Margin = System::Windows::Forms::Padding(2);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(202, 106);
+			this->button1->Size = System::Drawing::Size(135, 69);
 			this->button1->TabIndex = 8;
 			this->button1->Text = L"Обчислити\r\nта побудувати\r\n\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
-			// numericUpDown3
-			// 
-			this->numericUpDown3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->numericUpDown3->Location = System::Drawing::Point(1137, 152);
-			this->numericUpDown3->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
-			this->numericUpDown3->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
-			this->numericUpDown3->Name = L"numericUpDown3";
-			this->numericUpDown3->Size = System::Drawing::Size(56, 28);
-			this->numericUpDown3->TabIndex = 11;
-			this->numericUpDown3->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
-			// 
-			// numericUpDown2
-			// 
-			this->numericUpDown2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->numericUpDown2->Location = System::Drawing::Point(1137, 114);
-			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
-			this->numericUpDown2->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
-			this->numericUpDown2->Name = L"numericUpDown2";
-			this->numericUpDown2->Size = System::Drawing::Size(56, 28);
-			this->numericUpDown2->TabIndex = 10;
-			this->numericUpDown2->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
-			// 
 			// numericUpDown1
 			// 
 			this->numericUpDown1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->numericUpDown1->Location = System::Drawing::Point(1137, 77);
+			this->numericUpDown1->Location = System::Drawing::Point(762, 50);
+			this->numericUpDown1->Margin = System::Windows::Forms::Padding(2);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->numericUpDown1->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(56, 28);
+			this->numericUpDown1->Size = System::Drawing::Size(37, 21);
 			this->numericUpDown1->TabIndex = 9;
 			this->numericUpDown1->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			// 
 			// textBox3
 			// 
-			this->textBox3->Location = System::Drawing::Point(112, 137);
+			this->textBox3->Location = System::Drawing::Point(75, 89);
+			this->textBox3->Margin = System::Windows::Forms::Padding(2);
 			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(112, 28);
+			this->textBox3->Size = System::Drawing::Size(76, 21);
 			this->textBox3->TabIndex = 3;
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(318, 63);
+			this->textBox2->Location = System::Drawing::Point(212, 41);
+			this->textBox2->Margin = System::Windows::Forms::Padding(2);
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(112, 28);
+			this->textBox2->Size = System::Drawing::Size(76, 21);
 			this->textBox2->TabIndex = 2;
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(112, 63);
+			this->textBox1->Location = System::Drawing::Point(75, 41);
+			this->textBox1->Margin = System::Windows::Forms::Padding(2);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(112, 28);
+			this->textBox1->Size = System::Drawing::Size(76, 21);
 			this->textBox1->TabIndex = 1;
-			// 
-			// label9
-			// 
-			this->label9->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->label9->AutoSize = true;
-			this->label9->Location = System::Drawing::Point(876, 152);
-			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(227, 22);
-			this->label9->TabIndex = 8;
-			this->label9->Text = L"Товщина ліній гратки =";
 			// 
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(39, 63);
+			this->label8->Location = System::Drawing::Point(26, 41);
+			this->label8->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(44, 22);
+			this->label8->Size = System::Drawing::Size(31, 15);
 			this->label8->TabIndex = 7;
 			this->label8->Text = L"al =";
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(244, 63);
+			this->label7->Location = System::Drawing::Point(163, 41);
+			this->label7->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(50, 22);
+			this->label7->Size = System::Drawing::Size(35, 15);
 			this->label7->TabIndex = 6;
 			this->label7->Text = L"bl = ";
-			// 
-			// label6
-			// 
-			this->label6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(838, 122);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(264, 22);
-			this->label6->TabIndex = 5;
-			this->label6->Text = L"Товщина осей координат =";
-			this->label6->Click += gcnew System::EventHandler(this, &MyForm::label6_Click);
 			// 
 			// label5
 			// 
 			this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(824, 80);
+			this->label5->Location = System::Drawing::Point(553, 52);
+			this->label5->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(281, 22);
+			this->label5->Size = System::Drawing::Size(201, 15);
 			this->label5->TabIndex = 4;
 			this->label5->Text = L"Товщина лінії графіку ф-ції =";
 			// 
@@ -440,18 +423,20 @@ namespace fourierui {
 			// 
 			this->label12->AutoSize = true;
 			this->label12->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label12->Location = System::Drawing::Point(39, 106);
+			this->label12->Location = System::Drawing::Point(26, 69);
+			this->label12->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label12->Name = L"label12";
-			this->label12->Size = System::Drawing::Size(301, 22);
+			this->label12->Size = System::Drawing::Size(222, 15);
 			this->label12->TabIndex = 3;
 			this->label12->Text = L"Введіть кількість точок графіку";
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(39, 137);
+			this->label3->Location = System::Drawing::Point(26, 89);
+			this->label3->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(59, 22);
+			this->label3->Size = System::Drawing::Size(41, 15);
 			this->label3->TabIndex = 2;
 			this->label3->Text = L"Ne = ";
 			// 
@@ -460,20 +445,22 @@ namespace fourierui {
 			this->label11->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label11->AutoSize = true;
 			this->label11->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label11->Location = System::Drawing::Point(824, 37);
+			this->label11->Location = System::Drawing::Point(549, 24);
+			this->label11->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label11->Name = L"label11";
-			this->label11->Size = System::Drawing::Size(343, 22);
+			this->label11->Size = System::Drawing::Size(181, 15);
 			this->label11->TabIndex = 1;
-			this->label11->Text = L"Оберіть, при потребі, інші значення";
+			this->label11->Text = L"Параметри відображення";
 			this->label11->Click += gcnew System::EventHandler(this, &MyForm::label11_Click);
 			// 
 			// label10
 			// 
 			this->label10->AutoSize = true;
 			this->label10->ForeColor = System::Drawing::Color::SeaGreen;
-			this->label10->Location = System::Drawing::Point(39, 37);
+			this->label10->Location = System::Drawing::Point(26, 24);
+			this->label10->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(290, 22);
+			this->label10->Size = System::Drawing::Size(209, 15);
 			this->label10->TabIndex = 0;
 			this->label10->Text = L"Введіть межі зміни аргументу";
 			// 
@@ -482,17 +469,18 @@ namespace fourierui {
 			this->chart1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			chartArea4->Name = L"ChartArea1";
-			this->chart1->ChartAreas->Add(chartArea4);
-			legend4->Name = L"Legend1";
-			this->chart1->Legends->Add(legend4);
-			this->chart1->Location = System::Drawing::Point(12, 12);
+			chartArea3->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea3);
+			legend3->Name = L"Legend1";
+			this->chart1->Legends->Add(legend3);
+			this->chart1->Location = System::Drawing::Point(8, 8);
+			this->chart1->Margin = System::Windows::Forms::Padding(2);
 			this->chart1->Name = L"chart1";
-			series4->ChartArea = L"ChartArea1";
-			series4->Legend = L"Legend1";
-			series4->Name = L"Series1";
-			this->chart1->Series->Add(series4);
-			this->chart1->Size = System::Drawing::Size(1536, 648);
+			series3->ChartArea = L"ChartArea1";
+			series3->Legend = L"Legend1";
+			series3->Name = L"Series1";
+			this->chart1->Series->Add(series3);
+			this->chart1->Size = System::Drawing::Size(1024, 421);
 			this->chart1->TabIndex = 27;
 			this->chart1->TabStop = false;
 			this->chart1->Text = L"chart1";
@@ -503,9 +491,10 @@ namespace fourierui {
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(254)));
 			this->button3->ForeColor = System::Drawing::Color::SeaGreen;
-			this->button3->Location = System::Drawing::Point(1318, 612);
+			this->button3->Location = System::Drawing::Point(879, 398);
+			this->button3->Margin = System::Windows::Forms::Padding(2);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(202, 37);
+			this->button3->Size = System::Drawing::Size(135, 24);
 			this->button3->TabIndex = 27;
 			this->button3->Text = L"Масштаб";
 			this->button3->UseVisualStyleBackColor = true;
@@ -513,19 +502,18 @@ namespace fourierui {
 			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1554, 943);
+			this->ClientSize = System::Drawing::Size(1036, 613);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->groupBox1);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"MyForm";
 			this->Text = L"fourier-cuda";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
 			this->ResumeLayout(false);
@@ -565,8 +553,16 @@ private: System::Void cb_auto_CheckedChanged(System::Object^ sender, System::Eve
 	};
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->chart1->ChartAreas[0]->AxisX->ScaleView->ZoomReset();
-	this->chart1->ChartAreas[0]->AxisY->ScaleView->ZoomReset();
+	this->chart1->ChartAreas[0]->AxisX->ScaleView->ZoomReset(0);
+	this->chart1->ChartAreas[0]->AxisY->ScaleView->ZoomReset(0);
+}
+private: System::Void cb_cpu_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (cb_cpu->Checked) {
+		gpu_select->Enabled = false;
+	}
+	else {
+		gpu_select->Enabled = true;
+	};
 }
 };
 }
