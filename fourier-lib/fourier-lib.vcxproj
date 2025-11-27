@@ -78,7 +78,7 @@
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
-      <CodeGeneration>compute_61,sm_61;compute_75,sm_75;compute_86,sm_86</CodeGeneration>
+      <CodeGeneration>compute_35,sm_35;compute_37,sm_37;compute_50,sm_50;compute_52,sm_52;compute_60,sm_60;compute_61,sm_61;compute_70,sm_70;compute_75,sm_75;compute_80,sm_80;compute_86,sm_86;compute_89,sm_89;compute_90,sm_90;compute_90,compute_90</CodeGeneration>
       <AdditionalOptions>-allow-unsupported-compiler -D_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH %(AdditionalOptions)</AdditionalOptions>
       <FastMath>false</FastMath>
     </CudaCompile>

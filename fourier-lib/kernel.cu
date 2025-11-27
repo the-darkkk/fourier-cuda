@@ -1,9 +1,16 @@
-﻿#define USE_SAFE_ATOMICS 0 // directive that switches to looped implementation of atomicAdd for doubles.
-// recommended to use for nvidia maxwell architecture and any compatibility layers for launching on non-nvidia hardware
+﻿#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
+#include <cmath>
 
-#if defined(USE_SAFE_ATOMICS) // basically uses uns long long int insted of doubles
-__device__ double safeAtomicAdd(double* address, double val)
+// switch to ensure that double will work with AtomicAdd on older gpus
+__device__ __forceinline__ double safeAtomicAdd(double* address, double val)
 {
+    // Native atomicAdd for double was introduced in Pascal (Compute 6.0)
+    // If compiling for Pascal or newer using the hardware instruction
+#if defined(__CUDA_ARCH__) && (__CUDA_ARCH__ >= 600)
+    return atomicAdd(address, val);
+
+#else // if not - using the software long long int comparison loop
     unsigned long long int* address_as_ull = (unsigned long long int*)address;
     unsigned long long int old = *address_as_ull, assumed;
     do {
@@ -12,18 +19,8 @@ __device__ double safeAtomicAdd(double* address, double val)
             __double_as_longlong(val + __longlong_as_double(assumed)));
     } while (assumed != old);
     return __longlong_as_double(old);
-}
-
-#else
-__device__ double safeAtomicAdd(double* address, double val)
-{
-    return atomicAdd(address, val);
-}
 #endif
-
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
-#include <cmath>
+}
 
 // step 1 of calculating fourier sequence - calculating the coeffs
 __global__ void calculateCoefficientsKernel(double* d_G, double* d_D, const double* d_x, const double* d_y, int Ne, int Ng, double w) {

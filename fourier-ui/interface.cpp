@@ -56,7 +56,7 @@ void MyForm::DrawGraphics(const Result& result, const std::vector<double>& x_val
 	this->chart1->Series->SuspendUpdates();
 	this->chart1->Series->Clear();
 
-	Series^ sOriginal = gcnew Series("Original Data");
+	Series^ sOriginal = gcnew Series("Original function");
 	sOriginal->ChartType = SeriesChartType::FastLine; 
 	sOriginal->Color = Color::Blue;
 	sOriginal->BorderWidth = (int)numericUpDown1->Value;
