@@ -102,12 +102,14 @@ namespace fourierui {
 	private: System::Windows::Forms::CheckBox^ cb_auto;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
 	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::CheckBox^ cb_cpu;
 
 
 	private:
 		void CalculateFourier();
-		void DrawGraphics(const std::vector<double>& calculatedY, const std::vector<double>& x_values, const std::vector<double>& y_values);
+		void DrawGraphics(const std::vector<double>& x_values, const std::vector<double>& y_values, const std::vector<double>& y2_values, bool IsLogarithmic, const char* name1, const char* name2);
+		void PerformTest(); // method to perform the same set of calculations on both cpu and gpu to compare the speed
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -116,9 +118,9 @@ namespace fourierui {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea3 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->cb_cpu = (gcnew System::Windows::Forms::CheckBox());
 			this->cb_auto = (gcnew System::Windows::Forms::CheckBox());
@@ -147,6 +149,7 @@ namespace fourierui {
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
@@ -155,6 +158,7 @@ namespace fourierui {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->button4);
 			this->groupBox1->Controls->Add(this->cb_cpu);
 			this->groupBox1->Controls->Add(this->cb_auto);
 			this->groupBox1->Controls->Add(this->label15);
@@ -329,10 +333,10 @@ namespace fourierui {
 			// 
 			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button2->ForeColor = System::Drawing::Color::SeaGreen;
-			this->button2->Location = System::Drawing::Point(879, 103);
+			this->button2->Location = System::Drawing::Point(879, 116);
 			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(135, 58);
+			this->button2->Size = System::Drawing::Size(135, 45);
 			this->button2->TabIndex = 13;
 			this->button2->Text = L"Вийти";
 			this->button2->UseVisualStyleBackColor = true;
@@ -342,10 +346,10 @@ namespace fourierui {
 			// 
 			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->button1->ForeColor = System::Drawing::Color::SeaGreen;
-			this->button1->Location = System::Drawing::Point(879, 28);
+			this->button1->Location = System::Drawing::Point(879, 22);
 			this->button1->Margin = System::Windows::Forms::Padding(2);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(135, 69);
+			this->button1->Size = System::Drawing::Size(135, 43);
 			this->button1->TabIndex = 8;
 			this->button1->Text = L"Обчислити\r\nта побудувати\r\n\r\n";
 			this->button1->UseVisualStyleBackColor = true;
@@ -468,17 +472,17 @@ namespace fourierui {
 			this->chart1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			chartArea3->Name = L"ChartArea1";
-			this->chart1->ChartAreas->Add(chartArea3);
-			legend3->Name = L"Legend1";
-			this->chart1->Legends->Add(legend3);
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->chart1->Legends->Add(legend1);
 			this->chart1->Location = System::Drawing::Point(8, 8);
 			this->chart1->Margin = System::Windows::Forms::Padding(2);
 			this->chart1->Name = L"chart1";
-			series3->ChartArea = L"ChartArea1";
-			series3->Legend = L"Legend1";
-			series3->Name = L"Series1";
-			this->chart1->Series->Add(series3);
+			series1->ChartArea = L"ChartArea1";
+			series1->Legend = L"Legend1";
+			series1->Name = L"Series1";
+			this->chart1->Series->Add(series1);
 			this->chart1->Size = System::Drawing::Size(1024, 421);
 			this->chart1->TabIndex = 27;
 			this->chart1->TabStop = false;
@@ -498,6 +502,19 @@ namespace fourierui {
 			this->button3->Text = L"Масштаб";
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+			// 
+			// button4
+			// 
+			this->button4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->button4->ForeColor = System::Drawing::Color::SeaGreen;
+			this->button4->Location = System::Drawing::Point(879, 69);
+			this->button4->Margin = System::Windows::Forms::Padding(2);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(135, 43);
+			this->button4->TabIndex = 28;
+			this->button4->Text = L"Тестування";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// MyForm
 			// 
@@ -563,6 +580,9 @@ private: System::Void cb_cpu_CheckedChanged(System::Object^ sender, System::Even
 	else {
 		gpu_select->Enabled = true;
 	};
+}
+private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+	PerformTest();
 }
 };
 }

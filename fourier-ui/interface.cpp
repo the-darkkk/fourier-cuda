@@ -43,7 +43,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 	}
 
 	std::vector<double> calculatedY;
-	float executionTimeMs = 0.0f;
+	double executionTimeMs = 0.0f;
 	bool isSuccess = false;
 	std::string errorMessage = "";
 
@@ -75,20 +75,29 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 	}
 
 	label15->Text = Convert::ToString(executionTimeMs) + " ms"; // show a timer
-	if (isSuccess) { DrawGraphics(calculatedY, x_values, y_values); } // draw charts if successfull
+	if (isSuccess) { DrawGraphics(x_values, y_values, calculatedY, false, "Initial function", "Fourier series"); } // draw charts if successfull
 	else { MessageBox::Show("Error occured! : " + gcnew String(errorMessage.c_str()), "Error");}; // show an error if unsuccessful
 }
 
-void MyForm::DrawGraphics(const std::vector<double>& calculatedY, const std::vector<double>& x_values, const std::vector<double>& y_values) {
+void MyForm::DrawGraphics(const std::vector<double>& x_values, const std::vector<double>& y_values, const std::vector<double>& y2_values, bool IsLogarithmic, const char* name1, const char* name2) {
 	this->chart1->Series->SuspendUpdates();
 	this->chart1->Series->Clear();
 
-	Series^ sOriginal = gcnew Series("Original function");
+	if (IsLogarithmic) {
+		this->chart1->ChartAreas[0]->AxisY->IsLogarithmic = true;
+		this->chart1->ChartAreas[0]->AxisX->IsLogarithmic = true;
+	}
+	else {
+		this->chart1->ChartAreas[0]->AxisY->IsLogarithmic = false;
+		this->chart1->ChartAreas[0]->AxisX->IsLogarithmic = false;
+	}
+
+	Series^ sOriginal = gcnew Series(gcnew String(name1));
 	sOriginal->ChartType = SeriesChartType::FastLine; 
 	sOriginal->Color = Color::Blue;
 	sOriginal->BorderWidth = (int)numericUpDown1->Value;
 
-	Series^ sFourier = gcnew Series("Fourier Series");
+	Series^ sFourier = gcnew Series(gcnew String(name2));
 	sFourier->ChartType = SeriesChartType::FastLine;
 	sFourier->Color = Color::HotPink;
 	sFourier->BorderWidth = (int)numericUpDown4->Value;
@@ -98,8 +107,8 @@ void MyForm::DrawGraphics(const std::vector<double>& calculatedY, const std::vec
 	for (size_t i = 0; i < count; i++) {
 		sOriginal->Points->AddXY(x_values[i], y_values[i]);
 
-		if (i < calculatedY.size()) { 
-			sFourier->Points->AddXY(x_values[i], calculatedY[i]);
+		if (i < y2_values.size()) { 
+			sFourier->Points->AddXY(x_values[i], y2_values[i]);
 		}
 	}
 
@@ -107,4 +116,70 @@ void MyForm::DrawGraphics(const std::vector<double>& calculatedY, const std::vec
 	this->chart1->Series->Add(sFourier);
 	this->chart1->Series->ResumeUpdates();
 	this->chart1->ChartAreas[0]->RecalculateAxesScale();
+}
+
+void MyForm::PerformTest() {
+	if (gpu_select->SelectedIndex == -1) {
+		MessageBox::Show("Select the GPU!", "Error!");
+		return;
+	};
+	button4->Text = "Виконується...";
+	
+	double al = -3.14159265358979323846;
+	double bl = 3.14159265358979323846; // limits
+	int test_count = 10; // steps
+
+	std::vector<double> N_squared_values;   // x-vals (Complexity)
+	std::vector<double> gpu_time_values;    // y-vals gpu
+	std::vector<double> cpu_time_values;    // y-vals cpu
+	N_squared_values.reserve(test_count);
+	gpu_time_values.reserve(test_count);
+	cpu_time_values.reserve(test_count);
+
+	{ // a warmup test for gpu - just calculates something and does not save
+		FourierGPU::FourierCudaCalculator warmUpCalc;
+		FourierGPU::Params p; p.numHarmonics = 10;
+		std::vector<double> dummy(10, 0.0);
+		warmUpCalc.SelectDevice(gpu_select->SelectedIndex);
+		warmUpCalc.Calculate(p, dummy, dummy);
+	}
+
+	unsigned int N = 64;
+	for (int j = 0; j < test_count; j++) { // tabulate the input data as sin(x) function
+		std::vector<double> x_values(N);
+		std::vector<double> y_values(N); 
+		
+		double h = (bl - al) / (double)(N > 1 ? N - 1 : 1);
+		for (unsigned int i = 0; i < N; ++i) {
+			x_values[i] = al + i * h;
+			y_values[i] = sin(x_values[i]);
+		};
+
+		// testing gpu
+		FourierGPU::FourierCudaCalculator calc_gpu;
+		FourierGPU::Params p_gpu;
+		p_gpu.numHarmonics = N; // because alghorythm has O(N^2) complexity
+		calc_gpu.SelectDevice(gpu_select->SelectedIndex);
+
+		auto res_gpu = calc_gpu.Calculate(p_gpu, x_values, y_values);
+
+		// the same for cpu
+		FourierCPU::FourierCpuCalculator calc_cpu;
+		FourierCPU::Params p_cpu;
+		p_cpu.numHarmonics = N;
+		auto res_cpu = calc_cpu.Calculate(p_cpu, x_values, y_values);
+
+		// vector of complexity
+		double complexity = (double)N * (double)N;
+		N_squared_values.push_back(complexity);
+		
+		// check if the time is below zero
+		if (res_gpu.executionTimeMs <= 0.0) { res_gpu.executionTimeMs = 1e-3; };
+		if (res_cpu.executionTimeMs <= 0.0) { res_cpu.executionTimeMs = 1e-3; };
+		gpu_time_values.push_back(res_gpu.executionTimeMs);
+		cpu_time_values.push_back(res_cpu.executionTimeMs);
+		N *= 2; // double the N
+	}
+	button4->Text = "Тестування";
+	DrawGraphics(N_squared_values, cpu_time_values, gpu_time_values, true, "CPU", "GPU");
 }
