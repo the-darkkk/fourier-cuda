@@ -52,7 +52,10 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		FourierCPU::Params p;
 		p.numHarmonics = Ng;
 		// skip the device select
+		button1->Text = "Обчислення..";
+		System::Windows::Forms::Application::DoEvents(); // stop the math for a moment and update the btn
 		auto res = calc.Calculate(p, x_values, y_values); // CPU Calculation
+		button1->Text = "Обчислити";
 
 		// save the data to variables
 		calculatedY = res.calculatedY;
@@ -65,7 +68,10 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		FourierGPU::Params p;
 		p.numHarmonics = Ng;
 		calc.SelectDevice(gpu_select->SelectedIndex);
+		button1->Text = "Обчислення..";
+		System::Windows::Forms::Application::DoEvents(); // stop the math for a moment and update the btn
 		auto res = calc.Calculate(p, x_values, y_values); // GPU Calculation
+		button1->Text = "Обчислити";
 
 		// save the data to variables
 		calculatedY = res.calculatedY;
@@ -123,7 +129,6 @@ void MyForm::PerformTest() {
 		MessageBox::Show("Select the GPU!", "Error!");
 		return;
 	};
-	button4->Text = "Виконується...";
 	
 	double al = -3.14159265358979323846;
 	double bl = 3.14159265358979323846; // limits
@@ -161,12 +166,17 @@ void MyForm::PerformTest() {
 		p_gpu.numHarmonics = N; // because alghorythm has O(N^2) complexity
 		calc_gpu.SelectDevice(gpu_select->SelectedIndex);
 
+		label15->Text = String::Format("Тестування GPU.. {0}/{1}; Ne, Ng = {2}", j + 1, test_count, N); // show a step counter
+		System::Windows::Forms::Application::DoEvents(); // stop the math for a moment and update the label
 		auto res_gpu = calc_gpu.Calculate(p_gpu, x_values, y_values);
 
 		// the same for cpu
 		FourierCPU::FourierCpuCalculator calc_cpu;
 		FourierCPU::Params p_cpu;
 		p_cpu.numHarmonics = N;
+		
+		label15->Text = String::Format("Тестування CPU.. {0}/{1}; Ne, Ng = {2}", j + 1, test_count, N); // show a step counter
+		System::Windows::Forms::Application::DoEvents(); // stop the math for a moment and update the label
 		auto res_cpu = calc_cpu.Calculate(p_cpu, x_values, y_values);
 
 		// vector of complexity
@@ -180,6 +190,6 @@ void MyForm::PerformTest() {
 		cpu_time_values.push_back(res_cpu.executionTimeMs);
 		N *= 2; // double the N
 	}
-	button4->Text = "Тестування";
 	DrawGraphics(N_squared_values, cpu_time_values, gpu_time_values, true, "CPU", "GPU");
+	label15->Text = "Тестування завершено!";
 }

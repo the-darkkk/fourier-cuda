@@ -90,6 +90,7 @@ namespace fourierui {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label13;
 	private: System::Windows::Forms::ComboBox^ gpu_select;
+	private: System::ComponentModel::IContainer^ components;
 
 	protected:
 
@@ -97,12 +98,13 @@ namespace fourierui {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container^ components;
+
 	private: System::Windows::Forms::Label^ label15;
 	private: System::Windows::Forms::CheckBox^ cb_auto;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Button^ button4;
+	private: System::Windows::Forms::ToolTip^ toolTip1;
 	private: System::Windows::Forms::CheckBox^ cb_cpu;
 
 
@@ -118,10 +120,12 @@ namespace fourierui {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
 			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->cb_cpu = (gcnew System::Windows::Forms::CheckBox());
 			this->cb_auto = (gcnew System::Windows::Forms::CheckBox());
 			this->label15 = (gcnew System::Windows::Forms::Label());
@@ -149,7 +153,7 @@ namespace fourierui {
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
@@ -198,6 +202,19 @@ namespace fourierui {
 			this->groupBox1->Text = L"Параметри графіку";
 			this->groupBox1->Enter += gcnew System::EventHandler(this, &MyForm::groupBox1_Enter);
 			// 
+			// button4
+			// 
+			this->button4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->button4->ForeColor = System::Drawing::Color::SeaGreen;
+			this->button4->Location = System::Drawing::Point(879, 69);
+			this->button4->Margin = System::Windows::Forms::Padding(2);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(135, 43);
+			this->button4->TabIndex = 28;
+			this->button4->Text = L"Тестування";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
+			// 
 			// cb_cpu
 			// 
 			this->cb_cpu->AutoSize = true;
@@ -224,7 +241,7 @@ namespace fourierui {
 			// 
 			this->label15->AutoSize = true;
 			this->label15->ForeColor = System::Drawing::Color::MediumSeaGreen;
-			this->label15->Location = System::Drawing::Point(549, 130);
+			this->label15->Location = System::Drawing::Point(549, 125);
 			this->label15->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label15->Name = L"label15";
 			this->label15->Size = System::Drawing::Size(0, 15);
@@ -351,7 +368,7 @@ namespace fourierui {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(135, 43);
 			this->button1->TabIndex = 8;
-			this->button1->Text = L"Обчислити\r\nта побудувати\r\n\r\n";
+			this->button1->Text = L"Обчислити\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -487,6 +504,7 @@ namespace fourierui {
 			this->chart1->TabIndex = 27;
 			this->chart1->TabStop = false;
 			this->chart1->Text = L"chart1";
+			this->chart1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::chart1_MouseMove);
 			// 
 			// button3
 			// 
@@ -502,19 +520,6 @@ namespace fourierui {
 			this->button3->Text = L"Масштаб";
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
-			// 
-			// button4
-			// 
-			this->button4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->button4->ForeColor = System::Drawing::Color::SeaGreen;
-			this->button4->Location = System::Drawing::Point(879, 69);
-			this->button4->Margin = System::Windows::Forms::Padding(2);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(135, 43);
-			this->button4->TabIndex = 28;
-			this->button4->Text = L"Тестування";
-			this->button4->UseVisualStyleBackColor = true;
-			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// MyForm
 			// 
@@ -583,6 +588,37 @@ private: System::Void cb_cpu_CheckedChanged(System::Object^ sender, System::Even
 }
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 	PerformTest();
+}
+private: System::Void chart1_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	auto result = chart1->HitTest(e->X, e->Y); // checks what is under the cursor
+
+	bool isValidArea = // valid area = everything in the chart
+		result->ChartElementType == System::Windows::Forms::DataVisualization::Charting::ChartElementType::PlottingArea ||
+		result->ChartElementType == System::Windows::Forms::DataVisualization::Charting::ChartElementType::DataPoint ||
+		result->ChartElementType == System::Windows::Forms::DataVisualization::Charting::ChartElementType::Gridlines;
+
+	if (isValidArea) {
+		try {
+			// for a log chart when using "testing" feature
+			double xLog = chart1->ChartAreas[0]->AxisX->PixelPositionToValue(e->X);
+			double yLog = chart1->ChartAreas[0]->AxisY->PixelPositionToValue(e->Y);
+
+			double xVal = chart1->ChartAreas[0]->AxisX->IsLogarithmic ? pow(10, xLog) : xLog;
+			double yVal = chart1->ChartAreas[0]->AxisY->IsLogarithmic ? pow(10, yLog) : yLog;
+
+			System::String^ tipText = String::Format("X: {0:G4}\nY: {1:G4}", xVal, yVal);
+
+			if (toolTip1->GetToolTip(chart1) != tipText) {
+				toolTip1->SetToolTip(chart1, tipText);
+			}
+		}
+		catch (...) {
+			// if somethink fails
+		}
+	}
+	else {
+		toolTip1->SetToolTip(chart1, "");
+	}
 }
 };
 }
