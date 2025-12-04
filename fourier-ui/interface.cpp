@@ -53,6 +53,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		p.numHarmonics = Ng;
 		// skip the device select
 		button1->Text = "Обчислення..";
+		CalculateTimeEstimate(Ne, Ng);
 		System::Windows::Forms::Application::DoEvents(); // stop the math for a moment and update the btn
 		auto res = calc.Calculate(p, x_values, y_values); // CPU Calculation
 		button1->Text = "Обчислити";
@@ -69,6 +70,7 @@ void MyForm::CalculateFourier() { // function to perform fourier calculations by
 		p.numHarmonics = Ng;
 		calc.SelectDevice(gpu_select->SelectedIndex);
 		button1->Text = "Обчислення..";
+		CalculateTimeEstimate(Ne, Ng);
 		System::Windows::Forms::Application::DoEvents(); // stop the math for a moment and update the btn
 		auto res = calc.Calculate(p, x_values, y_values); // GPU Calculation
 		button1->Text = "Обчислити";
@@ -129,6 +131,8 @@ void MyForm::PerformTest() {
 		MessageBox::Show("Select the GPU!", "Error!");
 		return;
 	};
+	
+	label6->Text = ""; // clear the unneccessary data
 	
 	double al = -3.14159265358979323846;
 	double bl = 3.14159265358979323846; // limits
@@ -192,4 +196,108 @@ void MyForm::PerformTest() {
 	}
 	DrawGraphics(N_squared_values, cpu_time_values, gpu_time_values, true, "CPU", "GPU");
 	label15->Text = "Тестування завершено!";
+}
+
+void MyForm::PerformCalibraion() {
+	label6->Text = "Калібрування...";
+	System::Windows::Forms::Application::DoEvents(); // Щоб інтерфейс не завис
+
+	// smaller complexity (N1)
+	int N1 = 1024;
+	double C1 = (double)N1 * (double)N1; 
+
+	// bigger complexity (N2)
+	int N2 = 8169;
+	double C2 = (double)N2 * (double)N2;
+
+	// generate test data
+	std::vector<double> x1(N1), y1(N1);
+	for (int i = 0; i < N1; i++) { x1[i] = i; y1[i] = 1.0; }
+
+	std::vector<double> x2(N2), y2(N2);
+	for (int i = 0; i < N2; i++) { x2[i] = i; y2[i] = 1.0; }
+
+	// cpu calibration
+	FourierCPU::FourierCpuCalculator cpuCalc;
+	FourierCPU::Params cpuP1; cpuP1.numHarmonics = N1;
+	FourierCPU::Params cpuP2; cpuP2.numHarmonics = N2;
+
+	double t1_cpu = cpuCalc.Calculate(cpuP1, x1, y1).executionTimeMs;
+	double t2_cpu = cpuCalc.Calculate(cpuP2, x2, y2).executionTimeMs;
+
+	// y = kx + b (Slope = k, Intercept = b)
+	// k = (y2 - y1) / (x2 - x1)
+	this->cpuSlope = (t2_cpu - t1_cpu) / (C2 - C1);
+	// b = y1 - k*x1
+	this->cpuIntercept = t1_cpu - (this->cpuSlope * C1);
+	// check for sure
+	if (this->cpuIntercept < 0) this->cpuIntercept = 0;
+
+
+	if (gpu_select->SelectedIndex != -1) { // if there is gpu selected - calibrate it too
+		// for gpu
+		FourierGPU::FourierCudaCalculator gpuCalc;
+		FourierGPU::Params gpuP1; gpuP1.numHarmonics = N1;
+		FourierGPU::Params gpuP2; gpuP2.numHarmonics = N2;
+
+		gpuCalc.SelectDevice(gpu_select->SelectedIndex);
+
+		// warmup
+		gpuCalc.Calculate(gpuP1, x1, y1);
+
+		// calculation itself
+		double t1_gpu = gpuCalc.Calculate(gpuP1, x1, y1).executionTimeMs;
+		double t2_gpu = gpuCalc.Calculate(gpuP2, x2, y2).executionTimeMs;
+
+		// gpu constant calculation
+		this->gpuSlope = (t2_gpu - t1_gpu) / (C2 - C1);
+		this->gpuIntercept = t1_gpu - (this->gpuSlope * C1);
+
+		// check for sure
+		if (this->gpuIntercept < 0) this->gpuIntercept = 0;
+		this->isGpuCalibrated = true;
+	}
+	else {
+		this->gpuSlope = 0;
+		this->gpuIntercept = 0;
+	};
+
+	this->isCpuCalibrated = true;
+	label6->Text = "Калібрування завершено!";
+
+	String^ msg = String::Format(
+		"CPU:\n  Speed (Slope): {0:E4}\n  Overhead (Intercept): {1:F2} ms\n\n"
+		"GPU:\n  Speed (Slope): {2:E4}\n  Overhead (Intercept): {3:F2} ms",
+		this->cpuSlope, this->cpuIntercept,
+		this->gpuSlope, this->gpuIntercept
+	);
+
+	MessageBox::Show(msg, "Результати калібрування");
+}
+
+void MyForm::CalculateTimeEstimate(unsigned int Ne, unsigned int Ng) {
+	if ((cb_cpu->Checked && !isCpuCalibrated) || (!cb_cpu->Checked && !isGpuCalibrated)) {
+		label6->Text = "Оцінка часу недоступна, здійсніть калібрацію";
+		return;
+	}
+	else {
+		label6->Text = ""; // clear the label
+	}
+
+	try {
+		double targetComplexity = (double)Ne * (double)Ng;
+
+		double estimatedMs = 0;
+		if (!cb_cpu->Checked) {
+			// time  = (complexity * slope) + intercept (ms)
+			estimatedMs = (targetComplexity * this->gpuSlope) + this->gpuIntercept;
+		}
+		else {
+			estimatedMs = (targetComplexity * this->cpuSlope) + this->cpuIntercept;
+		}
+		label6->Text = Convert::ToString(estimatedMs) + " ms (estimated)"; // show a timer
+	}
+	catch (...) {
+		return;
+	}
 }
