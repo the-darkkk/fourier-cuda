@@ -136,7 +136,7 @@ void MyForm::PerformTest() {
 	
 	double al = -3.14159265358979323846;
 	double bl = 3.14159265358979323846; // limits
-	int test_count = 10; // steps
+	int test_count = 12; // steps
 
 	std::vector<double> N_squared_values;   // x-vals (Complexity)
 	std::vector<double> gpu_time_values;    // y-vals gpu
@@ -153,7 +153,7 @@ void MyForm::PerformTest() {
 		warmUpCalc.Calculate(p, dummy, dummy);
 	}
 
-	unsigned int N = 64;
+	unsigned int N = 32;
 	for (int j = 0; j < test_count; j++) { // tabulate the input data as sin(x) function
 		std::vector<double> x_values(N);
 		std::vector<double> y_values(N); 
@@ -194,6 +194,11 @@ void MyForm::PerformTest() {
 		cpu_time_values.push_back(res_cpu.executionTimeMs);
 		N *= 2; // double the N
 	}
+	String^ output_message = "Тестування завершено! \n";
+	for (size_t i = 0; i < test_count; ++i) {
+		output_message += String::Format("[{0}] CPUtime = {1}, GPUtime = {2}\n", i + 1, cpu_time_values[i], gpu_time_values[i]);
+	}
+	MessageBox::Show(output_message, "Результати тестування");
 	DrawGraphics(N_squared_values, cpu_time_values, gpu_time_values, true, "CPU", "GPU");
 	label15->Text = "Тестування завершено!";
 }
