@@ -52,7 +52,7 @@ Pre-built binaries for Windows are available for testing:
 ### Build Steps
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/the-darkkk/fourier-cuda](https://github.com/the-darkkk/fourier-cuda)
+    git clone https://github.com/the-darkkk/fourier-cuda
     ```
 2.  Open `fourier-cuda.sln` in Visual Studio.
 3.  Ensure the configuration is **Release** / **x64**.
